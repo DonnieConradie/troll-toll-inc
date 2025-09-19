@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://c480mvl7wq6rl"]
+
+[ext_resource type="Texture2D" uid="uid://cu2d1kysebxbu" path="res://assets/visual/Bridge_01.png" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://bonm2orkpv5g" path="res://assets/visual/Ground_01.png" id="2_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://c6j1tco5ahteu" path="res://assets/visual/Troll_01.png" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://co1ty75oooeq6" path="res://assets/visual/Colour palette - retrotronic-8x.png" id="4_lquwl"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 480.0
+offset_bottom = 270.0
+color = Color(0.681622, 0.800019, 0.870707, 1)
+
+[node name="Background2" type="ColorRect" parent="."]
+offset_top = 40.0
+offset_right = 480.0
+offset_bottom = 272.0
+color = Color(0.553764, 0.708614, 0.79953, 1)
+
+[node name="Background3" type="ColorRect" parent="."]
+offset_top = 88.0
+offset_right = 480.0
+offset_bottom = 272.0
+color = Color(0.36428, 0.521723, 0.61219, 1)
+
+[node name="Background4" type="ColorRect" parent="."]
+offset_top = 160.0
+offset_right = 480.0
+offset_bottom = 272.0
+color = Color(0.188793, 0.293179, 0.352605, 1)
+
+[node name="Bridge" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(240, 152)
+texture = ExtResource("1_0xm2m")
+
+[node name="Ground" type="TextureRect" parent="."]
+offset_top = 136.0
+offset_right = 480.0
+offset_bottom = 271.0
+texture = ExtResource("2_1bvp3")
+
+[node name="Troll" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(240, 232)
+texture = ExtResource("2_h2yge")
+
+[node name="ColourPalette-Retrotronic-8x" type="Sprite2D" parent="."]
+position = Vector2(-48, 200)
+texture = ExtResource("4_lquwl")
