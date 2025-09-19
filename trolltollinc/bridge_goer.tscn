@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtxkods0rn5sr"]
+
+[ext_resource type="Script" uid="uid://camgs5n1477cn" path="res://bridge_goer.gd" id="1_5gy0k"]
+[ext_resource type="Texture2D" uid="uid://bvyuj1f1y5wxl" path="res://icon.svg" id="1_f5jpr"]
+
+[node name="BridgeGoer" type="CharacterBody2D"]
+script = ExtResource("1_5gy0k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_f5jpr")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -32.0
+offset_top = -72.0
+offset_right = 32.0
+offset_bottom = -33.0
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1

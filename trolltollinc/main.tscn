@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://c480mvl7wq6rl"]
+[gd_scene load_steps=7 format=3 uid="uid://c480mvl7wq6rl"]
 
 [ext_resource type="Texture2D" uid="uid://cu2d1kysebxbu" path="res://assets/visual/Bridge_01.png" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://gbv1yeif4hmx" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bonm2orkpv5g" path="res://assets/visual/Ground_01.png" id="2_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://ds2fsbkwkj6sg" path="res://assets/visual/Foreground_01.png" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://iucvxpb2i2yu" path="res://assets/visual/Troll_02.png" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://dtunhkn6upjgf" path="res://troll.gd" id="6_7mycd"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_lquwl")
 
 [node name="Background" type="ColorRect" parent="."]
 offset_right = 480.0
@@ -51,3 +54,30 @@ texture = ExtResource("3_1bvp3")
 texture_filter = 1
 position = Vector2(240, 232)
 texture = ExtResource("4_lquwl")
+script = ExtResource("6_7mycd")
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(32, 112)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="EatButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = 41.0
+offset_right = -16.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "EAT"
+
+[node name="PassButton" type="Button" parent="CanvasLayer"]
+offset_left = 256.0
+offset_top = 176.0
+offset_right = 328.0
+offset_bottom = 207.0
+text = "PASS"
