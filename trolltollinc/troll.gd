@@ -1,27 +1,35 @@
 # Troll.gd
-extends Sprite2D
+extends AnimatedSprite2D
 
-# This will hold a reference to the current character on the bridge.
 var current_target = null
 
-# This function will be called by the Main script to tell the troll who to target.
+func _ready():
+	play("idle")
+
 func set_target(bridge_goer):
 	current_target = bridge_goer
-	print("Troll has a new target: ", current_target.name)
 
-# This is the function the EAT button will call.
-func on_eat_pressed():
-	# First, check if there is actually a target.
-	if current_target:
-		print("ATE ", current_target.name)
-		# Destroy the target.
-		current_target.queue_free()
-		# Clear the target so we can't eat them again.
-		current_target = null
+func get_target():
+	return current_target
 
-# This is the function the PASS button will call.
-func on_pass_pressed():
+func action_peek():
+	play("jump")
+
+func action_eat():
 	if current_target:
-		print("PASSED ", current_target.name)
+		play("eat")
 		current_target.queue_free()
 		current_target = null
+		play("drop")
+
+func action_pass():
+	if current_target:
+		play("drop")
+		current_target.queue_free()
+		current_target = null
+
+func _on_animation_finished():
+	if animation == "jump":
+		play("peek")
+	if animation == "drop":
+		play("idle")

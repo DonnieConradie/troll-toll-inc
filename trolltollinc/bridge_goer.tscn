@@ -1,14 +1,58 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtxkods0rn5sr"]
+[gd_scene load_steps=8 format=3 uid="uid://dtxkods0rn5sr"]
 
 [ext_resource type="Script" uid="uid://camgs5n1477cn" path="res://bridge_goer.gd" id="1_5gy0k"]
-[ext_resource type="Texture2D" uid="uid://bvyuj1f1y5wxl" path="res://icon.svg" id="1_f5jpr"]
+[ext_resource type="Texture2D" uid="uid://dypbghm2pcoc7" path="res://assets/visual/animations/Goat_idle_animation.png" id="2_5gy0k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5sqim"]
+atlas = ExtResource("2_5gy0k")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juivc"]
+atlas = ExtResource("2_5gy0k")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pga1"]
+atlas = ExtResource("2_5gy0k")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k330j"]
+atlas = ExtResource("2_5gy0k")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y7ln2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5sqim")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juivc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pga1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k330j")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
 
 [node name="BridgeGoer" type="CharacterBody2D"]
 script = ExtResource("1_5gy0k")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_f5jpr")
+sprite_frames = SubResource("SpriteFrames_y7ln2")
+animation = &"idle"
+frame_progress = 0.826602
+offset = Vector2(0, -32)
 
 [node name="Timer" type="Timer" parent="."]
 
