@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dtxkods0rn5sr"]
+[gd_scene load_steps=18 format=3 uid="uid://dtxkods0rn5sr"]
 
 [ext_resource type="Script" uid="uid://camgs5n1477cn" path="res://bridge_goer.gd" id="1_5gy0k"]
 [ext_resource type="Texture2D" uid="uid://dypbghm2pcoc7" path="res://assets/visual/animations/Goat_idle_animation.png" id="2_5gy0k"]
+[ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="3_5sqim"]
+[ext_resource type="Texture2D" uid="uid://4pebdfatgoyx" path="res://assets/visual/animations/Goat_walk_animation.png" id="3_juivc"]
+[ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="5_1pga1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5sqim"]
 atlas = ExtResource("2_5gy0k")
@@ -18,6 +21,30 @@ region = Rect2(0, 64, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_k330j"]
 atlas = ExtResource("2_5gy0k")
 region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ym5my"]
+atlas = ExtResource("3_juivc")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7gde"]
+atlas = ExtResource("3_juivc")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mgtn"]
+atlas = ExtResource("3_juivc")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjc3d"]
+atlas = ExtResource("3_juivc")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7ln2"]
+atlas = ExtResource("3_juivc")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3xx0"]
+atlas = ExtResource("3_juivc")
+region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_y7ln2"]
 animations = [{
@@ -38,11 +65,35 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ym5my")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7gde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mgtn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjc3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7ln2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3xx0")
+}],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 8.0
 }]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k330j"]
+shader = ExtResource("5_1pga1")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 4.0
+shader_parameter/character_width_factor = 20.0
 
 [node name="BridgeGoer" type="CharacterBody2D"]
 script = ExtResource("1_5gy0k")
@@ -50,17 +101,36 @@ script = ExtResource("1_5gy0k")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_y7ln2")
-animation = &"idle"
-frame_progress = 0.826602
+animation = &"walk"
+frame_progress = 0.657947
 offset = Vector2(0, -32)
 
 [node name="Timer" type="Timer" parent="."]
 
 [node name="Label" type="Label" parent="."]
-offset_left = -32.0
-offset_top = -72.0
-offset_right = 32.0
-offset_bottom = -33.0
+texture_filter = 1
+custom_minimum_size = Vector2(32, 0)
+offset_left = -24.0
+offset_top = -44.0
+offset_right = 24.0
+offset_bottom = -24.0
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_outline_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("3_5sqim")
+theme_override_font_sizes/font_size = 16
 text = "10"
 horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="DialogueBubble" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_k330j")
+custom_minimum_size = Vector2(32, 0)
+offset_left = -24.0
+offset_top = -48.0
+offset_right = 86.0
+offset_bottom = -28.0
+theme_override_colors/font_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_fonts/font = ExtResource("3_5sqim")
+theme_override_font_sizes/font_size = 13
+text = "I am the chosen one!"

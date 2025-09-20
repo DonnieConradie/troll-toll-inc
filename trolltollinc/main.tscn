@@ -1,9 +1,11 @@
-[gd_scene load_steps=59 format=3 uid="uid://c480mvl7wq6rl"]
+[gd_scene load_steps=69 format=3 uid="uid://c480mvl7wq6rl"]
 
-[ext_resource type="Texture2D" uid="uid://cu2d1kysebxbu" path="res://assets/visual/Bridge_01.png" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://gbv1yeif4hmx" path="res://main.gd" id="1_lquwl"]
-[ext_resource type="Texture2D" uid="uid://bonm2orkpv5g" path="res://assets/visual/Ground_01.png" id="2_1bvp3"]
+[ext_resource type="Shader" uid="uid://bt0tug2apdnl1" path="res://assets/shaders/silhouette_shader.gdshader" id="2_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://ds2fsbkwkj6sg" path="res://assets/visual/Foreground_01.png" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://d03bt6ojh1lri" path="res://assets/visual/sky_01.png" id="3_074og"]
+[ext_resource type="Texture2D" uid="uid://dqb15wf11nrt0" path="res://assets/visual/Trees_01.png" id="3_yaehf"]
+[ext_resource type="Texture2D" uid="uid://ck588puvy488i" path="res://assets/visual/Bridge_03.png" id="4_074og"]
 [ext_resource type="Texture2D" uid="uid://hcw3qju67v7s" path="res://assets/visual/animations/Troll_drop_animation_03.png" id="5_w48qg"]
 [ext_resource type="Script" uid="uid://dtunhkn6upjgf" path="res://troll.gd" id="6_7mycd"]
 [ext_resource type="Texture2D" uid="uid://cgrtgwtoml7qv" path="res://assets/visual/animations/Troll_idle_animation.png" id="6_vivmo"]
@@ -11,10 +13,15 @@
 [ext_resource type="Texture2D" uid="uid://ux3qhorbs2li" path="res://assets/visual/ui/gold_icon_small.png" id="7_efxa6"]
 [ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="8_dg77c"]
 [ext_resource type="Texture2D" uid="uid://wy14njarn8hv" path="res://assets/visual/animations/Troll_peek_animation.png" id="8_yaehf"]
+[ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="9_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://d277032wdl7u4" path="res://assets/visual/ui/bar_under_small.png" id="9_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://bnciy5miaslmj" path="res://assets/visual/ui/hunger_bar_fill_small.png" id="10_w48qg"]
 [ext_resource type="Texture2D" uid="uid://cnxsaqphtrflv" path="res://assets/visual/ui/scare_bar_fill_small.png" id="11_vivmo"]
 [ext_resource type="Texture2D" uid="uid://co1ty75oooeq6" path="res://assets/visual/Colour palette - retrotronic-8x.png" id="15_vivmo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
+shader = ExtResource("2_2cqfq")
+shader_parameter/silhouette_strength = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_074og"]
 atlas = ExtResource("5_w48qg")
@@ -338,42 +345,85 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.32
+shader_parameter/jiggle_speed = 10.0
+shader_parameter/character_width_factor = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 5.0
+shader_parameter/character_width_factor = 25.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cegan"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.2
+shader_parameter/jiggle_speed = 10.0
+shader_parameter/character_width_factor = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_82xsv"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.2
+shader_parameter/jiggle_speed = 10.0
+shader_parameter/character_width_factor = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_getpj"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.2
+shader_parameter/jiggle_speed = 10.0
+shader_parameter/character_width_factor = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryguw"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 1.5
+shader_parameter/jiggle_speed = 10.0
+shader_parameter/character_width_factor = 15.0
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lquwl")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Sky" type="TextureRect" parent="."]
+use_parent_material = true
+offset_top = -10.0
 offset_right = 480.0
 offset_bottom = 270.0
-color = Color(0.681622, 0.800019, 0.870707, 1)
-
-[node name="Background2" type="ColorRect" parent="."]
-offset_top = 40.0
-offset_right = 480.0
-offset_bottom = 270.0
-color = Color(0.553764, 0.708614, 0.79953, 1)
-
-[node name="Background3" type="ColorRect" parent="."]
-offset_top = 88.0
-offset_right = 480.0
-offset_bottom = 270.0
-color = Color(0.36428, 0.521723, 0.61219, 1)
+texture = ExtResource("3_074og")
 
 [node name="Background4" type="ColorRect" parent="."]
-offset_top = 160.0
+use_parent_material = true
+offset_top = 152.0
 offset_right = 480.0
 offset_bottom = 270.0
-color = Color(0.188793, 0.293179, 0.352605, 1)
+color = Color(0.203922, 0.305882, 0.360784, 1)
+
+[node name="TopWorld" type="Node2D" parent="."]
+material = SubResource("ShaderMaterial_d13ii")
+
+[node name="SpawnPointLeft" type="Marker2D" parent="TopWorld"]
+position = Vector2(-40, 152)
+
+[node name="BridgePoint" type="Marker2D" parent="TopWorld"]
+position = Vector2(160, 152)
+
+[node name="ExitPointRight" type="Marker2D" parent="TopWorld"]
+position = Vector2(504, 152)
+
+[node name="Trees" type="TextureRect" parent="TopWorld"]
+use_parent_material = true
+offset_top = 20.0
+offset_right = 480.0
+offset_bottom = 149.0
+texture = ExtResource("3_yaehf")
+
+[node name="DialogueTriggerPoint" type="Marker2D" parent="."]
+position = Vector2(8, 152)
 
 [node name="Bridge" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(240, 192)
-texture = ExtResource("1_0xm2m")
-
-[node name="Ground" type="TextureRect" parent="."]
-offset_top = 135.0
-offset_right = 480.0
-offset_bottom = 270.0
-texture = ExtResource("2_1bvp3")
+position = Vector2(240, 145)
+texture = ExtResource("4_074og")
 
 [node name="Foregound" type="TextureRect" parent="."]
 offset_top = 135.0
@@ -383,15 +433,27 @@ texture = ExtResource("3_1bvp3")
 
 [node name="Troll" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(240, 216)
+position = Vector2(240, 182.5)
 sprite_frames = SubResource("SpriteFrames_ruth0")
-animation = &"jump"
-frame = 8
-frame_progress = 1.0
+animation = &"idle"
 script = ExtResource("6_7mycd")
 
-[node name="SpawnPoint" type="Marker2D" parent="."]
-position = Vector2(120, 184)
+[node name="TrollDialogueBubble" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_yaehf")
+custom_minimum_size = Vector2(32, 0)
+offset_left = 184.0
+offset_top = 120.0
+offset_right = 294.0
+offset_bottom = 140.0
+theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_colors/font_outline_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 13
+text = "Who goes there!?"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -415,6 +477,7 @@ theme_override_constants/separation = 3
 
 [node name="GoldLabel" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
 texture_filter = 1
+material = SubResource("ShaderMaterial_074og")
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
@@ -429,6 +492,7 @@ text = "100"
 horizontal_alignment = 2
 
 [node name="GoldIcon" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
+material = SubResource("ShaderMaterial_cegan")
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("7_efxa6")
@@ -439,6 +503,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="HungerBar" type="TextureProgressBar" parent="CanvasLayer/MarginContainer/HBoxContainer/HBoxContainer2"]
+material = SubResource("ShaderMaterial_82xsv")
 layout_mode = 2
 value = 50.0
 fill_mode = 3
@@ -446,6 +511,7 @@ texture_under = ExtResource("9_ycdy4")
 texture_progress = ExtResource("10_w48qg")
 
 [node name="ScareBar" type="TextureProgressBar" parent="CanvasLayer/MarginContainer/HBoxContainer/HBoxContainer2"]
+material = SubResource("ShaderMaterial_getpj")
 layout_mode = 2
 value = 50.0
 fill_mode = 3
@@ -453,31 +519,32 @@ texture_under = ExtResource("9_ycdy4")
 texture_progress = ExtResource("11_vivmo")
 
 [node name="EatButton" type="Button" parent="CanvasLayer"]
-offset_left = 136.0
-offset_top = 192.0
+offset_left = 128.0
+offset_top = 24.0
 offset_right = 200.0
-offset_bottom = 232.0
+offset_bottom = 64.0
 text = "EAT"
 
 [node name="PassButton" type="Button" parent="CanvasLayer"]
 offset_left = 280.0
-offset_top = 192.0
-offset_right = 344.0
-offset_bottom = 232.0
+offset_top = 24.0
+offset_right = 352.0
+offset_bottom = 64.0
 text = "PASS"
 
 [node name="InspectButton" type="Button" parent="CanvasLayer"]
-offset_left = 176.0
-offset_top = 120.0
-offset_right = 304.0
-offset_bottom = 152.0
+offset_left = 128.0
+offset_top = 24.0
+offset_right = 201.0
+offset_bottom = 64.0
 text = "INSPECT"
 
 [node name="CensoredLabel" type="Label" parent="CanvasLayer"]
 texture_filter = 1
+material = SubResource("ShaderMaterial_ryguw")
 custom_minimum_size = Vector2(128, 0)
 offset_left = 160.0
-offset_top = 120.0
+offset_top = 104.0
 offset_right = 320.0
 offset_bottom = 152.0
 theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
