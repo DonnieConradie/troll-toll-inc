@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://c480mvl7wq6rl"]
+[gd_scene load_steps=108 format=3 uid="uid://c480mvl7wq6rl"]
 
 [ext_resource type="Script" uid="uid://gbv1yeif4hmx" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="Shader" uid="uid://bt0tug2apdnl1" path="res://assets/shaders/silhouette_shader.gdshader" id="2_2cqfq"]
@@ -17,11 +17,22 @@
 [ext_resource type="Texture2D" uid="uid://d277032wdl7u4" path="res://assets/visual/ui/bar_under_small.png" id="9_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://bnciy5miaslmj" path="res://assets/visual/ui/hunger_bar_fill_small.png" id="10_w48qg"]
 [ext_resource type="Texture2D" uid="uid://cnxsaqphtrflv" path="res://assets/visual/ui/scare_bar_fill_small.png" id="11_vivmo"]
+[ext_resource type="AudioStream" uid="uid://cihwuhphuwvfv" path="res://assets/sound/Landing_02.MP3" id="12_xuqvo"]
 [ext_resource type="Texture2D" uid="uid://co1ty75oooeq6" path="res://assets/visual/Colour palette - retrotronic-8x.png" id="15_vivmo"]
 [ext_resource type="FontFile" uid="uid://d0w1s1dm53moq" path="res://assets/fonts/Pixel Square 10.ttf" id="18_ryguw"]
 [ext_resource type="Texture2D" uid="uid://wwkb4i4nyhpw" path="res://assets/visual/printer_table.png" id="19_82xsv"]
 [ext_resource type="Texture2D" uid="uid://dv83gktlwnro0" path="res://assets/visual/animations/printer_animation.png" id="20_getpj"]
 [ext_resource type="Texture2D" uid="uid://b8slbojuq37sx" path="res://assets/visual/printer.png" id="20_ryguw"]
+[ext_resource type="Texture2D" uid="uid://dsbpgudgagnwp" path="res://assets/visual/printer_02.png" id="21_d13ii"]
+[ext_resource type="AudioStream" uid="uid://juwfy02jy8wf" path="res://assets/sound/printing.mp3" id="24_0odxb"]
+[ext_resource type="AudioStream" uid="uid://d04wk2gye2dsk" path="res://assets/sound/fax_noises.mp3" id="25_lswn8"]
+[ext_resource type="AudioStream" uid="uid://fx7ptq0hvdc" path="res://assets/sound/meh2.mp3" id="26_lswn8"]
+[ext_resource type="AudioStream" uid="uid://badyfbrosj50" path="res://assets/sound/ambience_infested.mp3" id="27_a6jrf"]
+[ext_resource type="AudioStream" uid="uid://bqbelh3is5u1s" path="res://assets/sound/troll_voice_01.MP3" id="27_htxhm"]
+[ext_resource type="AudioStream" uid="uid://b6j6b4hko68nx" path="res://assets/sound/troll_voice_02.MP3" id="28_jq2sk"]
+[ext_resource type="AudioStream" uid="uid://jxoldurkm2g5" path="res://assets/sound/troll_voice_03.MP3" id="29_4k2k6"]
+[ext_resource type="AudioStream" uid="uid://djrpdsaewb1vt" path="res://assets/sound/troll_voice_04.MP3" id="30_0rl1p"]
+[ext_resource type="AudioStream" uid="uid://bxu1e0o05ev20" path="res://assets/sound/troll_voice_05.MP3" id="31_ok6jj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
 shader = ExtResource("2_2cqfq")
@@ -349,6 +360,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_facbu"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("12_xuqvo")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
 shader = ExtResource("9_2cqfq")
 shader_parameter/jiggle_amount = 0.32
@@ -405,6 +421,10 @@ shader_parameter/jiggle_amount = 1.5
 shader_parameter/jiggle_speed = 10.0
 shader_parameter/character_width_factor = 15.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu3dr"]
+atlas = ExtResource("21_d13ii")
+region = Rect2(0, 0, 40, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ruth0"]
 atlas = ExtResource("20_ryguw")
 region = Rect2(0, 0, 40, 32)
@@ -445,9 +465,17 @@ region = Rect2(40, 64, 40, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ruth0")
+"texture": SubResource("AtlasTexture_wu3dr")
 }],
 "loop": true,
+"name": &"completed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ruth0")
+}],
+"loop": false,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -480,6 +508,20 @@ animations = [{
 "name": &"printing",
 "speed": 5.0
 }]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a6jrf"]
+random_pitch = 1.4
+streams_count = 1
+stream_0/stream = ExtResource("26_lswn8")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jq2sk"]
+random_pitch = 1.1
+streams_count = 5
+stream_0/stream = ExtResource("27_htxhm")
+stream_1/stream = ExtResource("28_jq2sk")
+stream_2/stream = ExtResource("29_4k2k6")
+stream_3/stream = ExtResource("30_0rl1p")
+stream_4/stream = ExtResource("31_ok6jj")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lquwl")
@@ -536,8 +578,11 @@ texture = ExtResource("3_1bvp3")
 texture_filter = 1
 position = Vector2(240, 182.5)
 sprite_frames = SubResource("SpriteFrames_ruth0")
-animation = &"idle"
+animation = &"drop"
 script = ExtResource("6_7mycd")
+
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="Troll"]
+stream = SubResource("AudioStreamRandomizer_facbu")
 
 [node name="TrollDialogueBubble" type="Label" parent="."]
 texture_filter = 1
@@ -695,5 +740,26 @@ texture = ExtResource("19_82xsv")
 position = Vector2(131, 189)
 sprite_frames = SubResource("SpriteFrames_wu3dr")
 animation = &"idle"
+autoplay = "idle"
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="Printing" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("24_0odxb")
+
+[node name="Fax_noise" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("25_lswn8")
+
+[node name="bleat" type="AudioStreamPlayer" parent="Sound"]
+stream = SubResource("AudioStreamRandomizer_a6jrf")
+volume_db = -15.0
+
+[node name="Troll_voice" type="AudioStreamPlayer" parent="Sound"]
+stream = SubResource("AudioStreamRandomizer_jq2sk")
+
+[node name="Ambience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("27_a6jrf")
+volume_db = -20.0
 
 [connection signal="animation_finished" from="Troll" to="Troll" method="_on_animation_finished"]
+[connection signal="frame_changed" from="Troll" to="Troll" method="_on_frame_changed"]

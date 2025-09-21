@@ -1,8 +1,13 @@
+# Troll.gd
 extends AnimatedSprite2D
 
 signal is_dropping(duration: float)
+@onready var sound_player = $SoundPlayer
 
 var current_target = null
+var land_sound = preload("res://assets/sound/Landing_02.MP3")
+
+const LAND_IMPACT_FRAME = 3
 
 func _ready():
 	play("idle")
@@ -37,10 +42,12 @@ func start_drop_sequence():
 	if animation == "drop": return
 	
 	play("drop")
-	# We will use a fixed duration for the fade effect.
-	# Adjust this value to match the feel of your drop animation.
 	var drop_duration = 0.5 
 	is_dropping.emit(drop_duration)
+	
+func play_land_sound():
+	sound_player.stream = land_sound
+	sound_player.play()
 
 func _on_animation_finished():
 	if animation == "jump":
@@ -49,3 +56,9 @@ func _on_animation_finished():
 		play("idle")
 	elif animation == "eat":
 		start_drop_sequence()
+
+func _on_frame_changed():
+	if animation == "drop":
+		if frame == LAND_IMPACT_FRAME:
+			sound_player.stream = land_sound
+			sound_player.play()

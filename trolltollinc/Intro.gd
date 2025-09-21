@@ -17,6 +17,7 @@ func show_first_decree():
 	decree_panel.mandate_accepted.connect(go_to_main_game)
 
 func go_to_main_game():
+	SoundManager.play("ui_click")
 	get_tree().change_scene_to_file("res://main.tscn")
 
 func _on_audio_stream_player_finished() -> void:

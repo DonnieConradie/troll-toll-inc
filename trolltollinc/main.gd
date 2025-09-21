@@ -17,6 +17,7 @@ extends Node2D
 @onready var troll_dialogue_bubble = $TrollDialogueBubble
 @onready var fax_machine = $FaxMachine
 @onready var grab_paper_button = $CanvasLayer/GrabPaperButton
+@onready var ambience: AudioStreamPlayer = $Ambience
 
 const DECREE_PANEL_SCENE = preload("res://decree_panel.tscn")
 
@@ -40,6 +41,7 @@ var troll_questions = [ "Who goes there?!", "What's the password?", "State your 
 var goat_answers = [ "Just a goat, sir!", "Ag, please man, just let me pass.", "Grumblegut", "I'm just a simple farmer... goat.", "My bru, I'm just trying to get to the other side." ]
 
 func _ready():
+	ambience.play()
 	inspect_button.pressed.connect(on_inspect_button_pressed)
 	eat_button.pressed.connect(on_eat_button_pressed)
 	pass_button.pressed.connect(on_pass_button_pressed)
@@ -104,12 +106,14 @@ func on_goat_timer_ran_out():
 	troll.action_pass()
 
 func on_goat_reaches_trigger():
+	$Sound/Troll_voice.play()
 	var troll_question = troll_questions.pick_random()
 	troll_dialogue_bubble.text = troll_question
 	troll_dialogue_bubble.show()
 	get_tree().create_timer(3.0).timeout.connect(func(): troll_dialogue_bubble.hide())
 
 func on_goat_reaches_bridge():
+	$Sound/bleat.play()
 	var goat_answer = goat_answers.pick_random()
 	var target = troll.get_target()
 	if target:
@@ -124,21 +128,24 @@ func on_goat_action_complete():
 	set_button_visibility(false, false, false)
 	get_tree().create_timer(4.0).timeout.connect(spawn_character)
 
-
 func start_end_of_day_sequence():
 	current_state = GameState.NONE
 	set_button_visibility(false, false, false)
 	
-	# Play fax sound here
+	SoundManager.play("fax_noises")
+	await SoundManager.sound_players["fax_noises"].finished
+	
+	SoundManager.play("printing")
 	fax_machine.play("printing")
 	fax_machine.animation_finished.connect(on_fax_printed, CONNECT_ONE_SHOT)
 
 func on_fax_printed():
-	fax_machine.play("idle")
+	fax_machine.play("completed") 
 	grab_paper_button.show()
 	grab_paper_button.pressed.connect(show_next_decree, CONNECT_ONE_SHOT)
 
 func show_next_decree():
+	SoundManager.play("paper_grab")
 	grab_paper_button.hide()
 	current_day += 1
 	
@@ -155,12 +162,14 @@ func show_next_decree():
 	decree_panel.mandate_accepted.connect(start_new_day)
 
 func start_new_day():
+	fax_machine.play("idle")
 	day_goat_index = 0
 	spawn_character()
 
 
 func on_inspect_button_pressed():
 	if current_state == GameState.WAITING_FOR_INSPECT:
+		SoundManager.play("ui_click")
 		current_state = GameState.WAITING_FOR_DECISION
 		
 		troll.action_peek()
@@ -173,6 +182,7 @@ func on_inspect_button_pressed():
 
 func on_eat_button_pressed():
 	if current_state == GameState.WAITING_FOR_DECISION:
+		SoundManager.play("crunch")
 		hunger = clamp(hunger + 20, 0, 100)
 		scare_factor = clamp(scare_factor + 15, 0, 100)
 		update_ui()
@@ -188,6 +198,10 @@ func on_pass_button_pressed():
 	if !target: return
 
 	if current_state == GameState.WAITING_FOR_INSPECT or current_state == GameState.WAITING_FOR_DECISION:
+		if gold > 0:
+			SoundManager.play("cha_ching")
+		else:
+			SoundManager.play("ui_click")
 		gold += 10
 		scare_factor = clamp(scare_factor - 10, 0, 100)
 		update_ui()

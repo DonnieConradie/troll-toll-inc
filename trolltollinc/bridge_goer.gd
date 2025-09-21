@@ -15,6 +15,7 @@ signal timer_ran_out
 @onready var timer = $Timer
 @onready var timer_label = $Label
 @onready var dialogue_bubble = $DialogueBubble
+@onready var footstep_player = $FootstepPlayer
 
 const WALK_SPEED = 70.0
 const DECELERATION = 3.0
@@ -24,8 +25,15 @@ var target_position: Vector2
 
 enum State { APPROACHING_TRIGGER, APPROACHING_BRIDGE, WAITING, DEPARTING }
 var current_state = State.APPROACHING_TRIGGER
-
 var goat_data: Dictionary
+var footstep_sounds = [
+	preload("res://assets/sound/footsteps_01.MP3"),
+	preload("res://assets/sound/footsteps_02.MP3"),
+	preload("res://assets/sound/footsteps_03.MP3"),
+	preload("res://assets/sound/footsteps_04.MP3"),
+	preload("res://assets/sound/footsteps_05.MP3"),
+	preload("res://assets/sound/footsteps_06.MP3")
+]
 
 func _physics_process(delta):
 	if current_state == State.WAITING:
@@ -91,6 +99,11 @@ func set_animation_state(state_name: String):
 		hooves_sprite.visible = false
 	
 	animation_player.play(state_name)
+
+func play_random_footstep():
+	var random_sound = footstep_sounds.pick_random()
+	footstep_player.stream = random_sound
+	footstep_player.play()
 
 func on_arrival_at_target():
 	if current_state == State.APPROACHING_TRIGGER:
