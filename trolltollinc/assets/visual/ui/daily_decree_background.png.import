@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://belaxrauinw4r"
-path="res://.godot/imported/suitcase_gold.png-544ac739bcfcf8c75d702f95b7e94802.ctex"
+uid="uid://b8h2ssmla50c3"
+path="res://.godot/imported/daily_decree_background.png-803fdf5d292fa9ac0f7cd20a14ad6d5d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visual/accessories/suitcase_gold.png"
-dest_files=["res://.godot/imported/suitcase_gold.png-544ac739bcfcf8c75d702f95b7e94802.ctex"]
+source_file="res://assets/visual/ui/daily_decree_background.png"
+dest_files=["res://.godot/imported/daily_decree_background.png-803fdf5d292fa9ac0f7cd20a14ad6d5d.ctex"]
 
 [params]
 

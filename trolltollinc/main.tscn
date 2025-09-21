@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://c480mvl7wq6rl"]
+[gd_scene load_steps=82 format=3 uid="uid://c480mvl7wq6rl"]
 
 [ext_resource type="Script" uid="uid://gbv1yeif4hmx" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="Shader" uid="uid://bt0tug2apdnl1" path="res://assets/shaders/silhouette_shader.gdshader" id="2_2cqfq"]
@@ -18,6 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://bnciy5miaslmj" path="res://assets/visual/ui/hunger_bar_fill_small.png" id="10_w48qg"]
 [ext_resource type="Texture2D" uid="uid://cnxsaqphtrflv" path="res://assets/visual/ui/scare_bar_fill_small.png" id="11_vivmo"]
 [ext_resource type="Texture2D" uid="uid://co1ty75oooeq6" path="res://assets/visual/Colour palette - retrotronic-8x.png" id="15_vivmo"]
+[ext_resource type="Texture2D" uid="uid://wwkb4i4nyhpw" path="res://assets/visual/printer_table.png" id="19_82xsv"]
+[ext_resource type="Texture2D" uid="uid://dv83gktlwnro0" path="res://assets/visual/animations/printer_animation.png" id="20_getpj"]
+[ext_resource type="Texture2D" uid="uid://b8slbojuq37sx" path="res://assets/visual/printer.png" id="20_ryguw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
 shader = ExtResource("2_2cqfq")
@@ -381,6 +384,82 @@ shader_parameter/jiggle_amount = 1.5
 shader_parameter/jiggle_speed = 10.0
 shader_parameter/character_width_factor = 15.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ruth0"]
+atlas = ExtResource("20_ryguw")
+region = Rect2(0, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rm4vd"]
+atlas = ExtResource("20_getpj")
+region = Rect2(0, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjyto"]
+atlas = ExtResource("20_getpj")
+region = Rect2(40, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sm6fg"]
+atlas = ExtResource("20_getpj")
+region = Rect2(80, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b17eg"]
+atlas = ExtResource("20_getpj")
+region = Rect2(0, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntx8l"]
+atlas = ExtResource("20_getpj")
+region = Rect2(40, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uatky"]
+atlas = ExtResource("20_getpj")
+region = Rect2(80, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqtf5"]
+atlas = ExtResource("20_getpj")
+region = Rect2(0, 64, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vm84"]
+atlas = ExtResource("20_getpj")
+region = Rect2(40, 64, 40, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wu3dr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ruth0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rm4vd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjyto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sm6fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b17eg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntx8l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uatky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqtf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vm84")
+}],
+"loop": false,
+"name": &"printing",
+"speed": 5.0
+}]
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lquwl")
 
@@ -525,6 +604,14 @@ offset_right = 200.0
 offset_bottom = 64.0
 text = "EAT"
 
+[node name="GrabPaperButton" type="Button" parent="CanvasLayer"]
+offset_left = 114.0
+offset_top = 198.0
+offset_right = 146.0
+offset_bottom = 218.0
+theme_override_font_sizes/font_size = 8
+text = "GRAB"
+
 [node name="PassButton" type="Button" parent="CanvasLayer"]
 offset_left = 280.0
 offset_top = 24.0
@@ -562,5 +649,14 @@ vertical_alignment = 1
 [node name="ColourPalette-Retrotronic-8x" type="Sprite2D" parent="CanvasLayer"]
 position = Vector2(176, 288)
 texture = ExtResource("15_vivmo")
+
+[node name="FaxMachinetable" type="Sprite2D" parent="."]
+position = Vector2(130, 217)
+texture = ExtResource("19_82xsv")
+
+[node name="FaxMachine" type="AnimatedSprite2D" parent="."]
+position = Vector2(131, 189)
+sprite_frames = SubResource("SpriteFrames_wu3dr")
+animation = &"idle"
 
 [connection signal="animation_finished" from="Troll" to="Troll" method="_on_animation_finished"]

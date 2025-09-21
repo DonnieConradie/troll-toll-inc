@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://boouhwehue3b5"
-path="res://.godot/imported/suitcase_blue.png-98cfc1cd9d8296c0b39a764bbe39f66c.ctex"
+uid="uid://dv83gktlwnro0"
+path="res://.godot/imported/printer_animation.png-ae1477594c35ee27f3933711fb650163.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visual/accessories/suitcase_blue.png"
-dest_files=["res://.godot/imported/suitcase_blue.png-98cfc1cd9d8296c0b39a764bbe39f66c.ctex"]
+source_file="res://assets/visual/animations/printer_animation.png"
+dest_files=["res://.godot/imported/printer_animation.png-ae1477594c35ee27f3933711fb650163.ctex"]
 
 [params]
 

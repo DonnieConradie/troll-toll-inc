@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2aya7olgc4q6"
-path="res://.godot/imported/suitcase_red.png-bba6d784726f922a22a1214c2b27f410.ctex"
+uid="uid://bomgyrh4s4oq7"
+path="res://.godot/imported/briefcase_normal.png-619c6f513caef409195c9611d4ec351e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visual/accessories/suitcase_red.png"
-dest_files=["res://.godot/imported/suitcase_red.png-bba6d784726f922a22a1214c2b27f410.ctex"]
+source_file="res://assets/visual/accessories/briefcase_normal.png"
+dest_files=["res://.godot/imported/briefcase_normal.png-619c6f513caef409195c9611d4ec351e.ctex"]
 
 [params]
 

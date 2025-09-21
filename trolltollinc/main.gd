@@ -15,7 +15,13 @@ extends Node2D
 @onready var censored_label = $CanvasLayer/CensoredLabel
 @onready var dialogue_trigger_point = $DialogueTriggerPoint
 @onready var troll_dialogue_bubble = $TrollDialogueBubble
+@onready var fax_machine = $FaxMachine
+@onready var grab_paper_button = $CanvasLayer/GrabPaperButton
 
+const DECREE_PANEL_SCENE = preload("res://decree_panel.tscn")
+
+
+var day_goat_index = 0
 const GoatData = preload("res://GoatData.gd")
 var goat_data_script = GoatData.new()
 
@@ -62,28 +68,26 @@ func update_ui():
 
 
 func spawn_character():
-	# First, get the data for the goat we need to spawn.
-	var goat_to_spawn_data
-	if current_day == 1:
-		if day_1_goat_index >= GoatData.DAY_1_GOATS.size():
-			print("End of Day 1!")
-			# We will add end-of-day logic here later.
-			return
-		
-		goat_to_spawn_data = GoatData.DAY_1_GOATS[day_1_goat_index]
-		day_1_goat_index += 1
+	var current_day_goats = GoatData.DAYS_DATA[current_day]
+	
+	if day_goat_index >= current_day_goats.size():
+		print("End of Day ", current_day)
+		start_end_of_day_sequence()
+		return
 
-	# Now, spawn the goat and initialize it WITH the data.
+	var goat_to_spawn_data = current_day_goats[day_goat_index]
+	day_goat_index += 1
+
 	var new_goer = BRIDGE_GOER_SCENE.instantiate()
 	add_child(new_goer)
 	
-	# THIS IS THE FIX: We now pass 4 arguments.
 	new_goer.initialize(
 		goat_to_spawn_data,
 		spawn_point_left.position, 
 		dialogue_trigger_point.position, 
 		bridge_point.position
 	)
+	
 	new_goer.action_complete.connect(on_goat_action_complete)
 	new_goer.dialogue_trigger_reached.connect(on_goat_reaches_trigger)
 	new_goer.final_position_reached.connect(on_goat_reaches_bridge)
@@ -92,6 +96,7 @@ func spawn_character():
 
 	current_state = GameState.DIALOGUE
 	set_button_visibility(false, false, false)
+
 
 func on_goat_timer_ran_out():
 	current_state = GameState.NONE
@@ -118,6 +123,41 @@ func on_goat_action_complete():
 	current_state = GameState.NONE
 	set_button_visibility(false, false, false)
 	get_tree().create_timer(4.0).timeout.connect(spawn_character)
+
+
+func start_end_of_day_sequence():
+	current_state = GameState.NONE
+	set_button_visibility(false, false, false)
+	
+	# Play fax sound here
+	fax_machine.play("printing")
+	fax_machine.animation_finished.connect(on_fax_printed, CONNECT_ONE_SHOT)
+
+func on_fax_printed():
+	fax_machine.play("idle")
+	grab_paper_button.show()
+	grab_paper_button.pressed.connect(show_next_decree, CONNECT_ONE_SHOT)
+
+func show_next_decree():
+	grab_paper_button.hide()
+	current_day += 1
+	
+	if not GoatData.DAYS_DATA.has(current_day):
+		print("YOU WON THE GAME!")
+		# Add end-of-game logic here
+		return
+
+	var decree_panel = DECREE_PANEL_SCENE.instantiate()
+	add_child(decree_panel)
+	
+	var next_decree_text = GoatData.DECREE_TEXTS[current_day]
+	decree_panel.show_decree(next_decree_text)
+	decree_panel.mandate_accepted.connect(start_new_day)
+
+func start_new_day():
+	day_goat_index = 0
+	spawn_character()
+
 
 func on_inspect_button_pressed():
 	if current_state == GameState.WAITING_FOR_INSPECT:

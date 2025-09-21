@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://dvc6v1ruc6wwl"]
+
+[ext_resource type="Texture2D" uid="uid://b8h2ssmla50c3" path="res://assets/visual/ui/daily_decree_background.png" id="1_2td1j"]
+[ext_resource type="Script" uid="uid://cv6j2e5xahoh2" path="res://decree_panel.gd" id="1_xyude"]
+[ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="2_xyude"]
+[ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="3_hsp3a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3towu"]
+shader = ExtResource("2_xyude")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 4.0
+shader_parameter/character_width_factor = 20.0
+
+[node name="DecreePanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xyude")
+
+[node name="fax_paper_background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+texture = ExtResource("1_2td1j")
+
+[node name="DecreeText" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_3towu")
+custom_minimum_size = Vector2(32, 0)
+offset_left = 104.0
+offset_top = 64.0
+offset_right = 320.0
+offset_bottom = 231.0
+rotation = 0.0707847
+theme_override_colors/font_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_fonts/font = ExtResource("3_hsp3a")
+theme_override_font_sizes/font_size = 13
+text = "I am the chosen one! I am the chosen one! I am the chosen one! I am the chose chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! "
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="AcceptButton" type="Button" parent="."]
+offset_left = 128.0
+offset_top = 208.0
+offset_right = 262.0
+offset_bottom = 248.0
+rotation = 0.0349066
+text = "Accept Mandate"
