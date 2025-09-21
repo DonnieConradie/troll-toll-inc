@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://chfxk2oj4v62p"]
+
+[ext_resource type="Texture2D" uid="uid://bb38j058x0ywp" path="res://assets/visual/accessories/hooves_normal.png" id="1_vrvhh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jk04l"]
+atlas = ExtResource("1_vrvhh")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xgfr"]
+atlas = ExtResource("1_vrvhh")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7vfw"]
+atlas = ExtResource("1_vrvhh")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_waj1k"]
+atlas = ExtResource("1_vrvhh")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvfvd"]
+atlas = ExtResource("1_vrvhh")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15d7g"]
+atlas = ExtResource("1_vrvhh")
+region = Rect2(64, 128, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jk04l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xgfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7vfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_waj1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvfvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15d7g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

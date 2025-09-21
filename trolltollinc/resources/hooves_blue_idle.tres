@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://rqplcxkf05jm"]
+
+[ext_resource type="Texture2D" uid="uid://dyle51mstovrp" path="res://assets/visual/accessories/hooves_idle_blue.png" id="1_psuen"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qic1n"]
+atlas = ExtResource("1_psuen")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg1d2"]
+atlas = ExtResource("1_psuen")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xyhfp"]
+atlas = ExtResource("1_psuen")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7iux"]
+atlas = ExtResource("1_psuen")
+region = Rect2(64, 64, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qic1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg1d2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xyhfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7iux")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

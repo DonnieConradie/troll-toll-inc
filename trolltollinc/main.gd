@@ -16,11 +16,16 @@ extends Node2D
 @onready var dialogue_trigger_point = $DialogueTriggerPoint
 @onready var troll_dialogue_bubble = $TrollDialogueBubble
 
+const GoatData = preload("res://GoatData.gd")
+var goat_data_script = GoatData.new()
+
 const BRIDGE_GOER_SCENE = preload("res://bridge_goer.tscn")
 
 var hunger = 100
 var gold = 0
 var scare_factor = 50
+var current_day = 1
+var day_1_goat_index = 0
 
 enum GameState { NONE, DIALOGUE, WAITING_FOR_INSPECT, WAITING_FOR_DECISION }
 var current_state = GameState.NONE
@@ -55,10 +60,30 @@ func update_ui():
 	scare_bar.value = scare_factor
 	gold_label.text = "%s" % gold
 
+
 func spawn_character():
+	# First, get the data for the goat we need to spawn.
+	var goat_to_spawn_data
+	if current_day == 1:
+		if day_1_goat_index >= GoatData.DAY_1_GOATS.size():
+			print("End of Day 1!")
+			# We will add end-of-day logic here later.
+			return
+		
+		goat_to_spawn_data = GoatData.DAY_1_GOATS[day_1_goat_index]
+		day_1_goat_index += 1
+
+	# Now, spawn the goat and initialize it WITH the data.
 	var new_goer = BRIDGE_GOER_SCENE.instantiate()
 	add_child(new_goer)
-	new_goer.initialize(spawn_point_left.position, dialogue_trigger_point.position, bridge_point.position)
+	
+	# THIS IS THE FIX: We now pass 4 arguments.
+	new_goer.initialize(
+		goat_to_spawn_data,
+		spawn_point_left.position, 
+		dialogue_trigger_point.position, 
+		bridge_point.position
+	)
 	new_goer.action_complete.connect(on_goat_action_complete)
 	new_goer.dialogue_trigger_reached.connect(on_goat_reaches_trigger)
 	new_goer.final_position_reached.connect(on_goat_reaches_bridge)

@@ -1,4 +1,3 @@
-# Troll.gd
 extends AnimatedSprite2D
 
 signal is_dropping(duration: float)
@@ -35,13 +34,13 @@ func action_pass():
 			start_drop_sequence()
 
 func start_drop_sequence():
-	if animation == "drop": return # Avoid starting it if already dropping
+	if animation == "drop": return
 	
 	play("drop")
-	var speed = sprite_frames.get_animation_speed("drop")
-	var frame_count = sprite_frames.get_frame_count("drop")
-	var duration = frame_count / speed
-	is_dropping.emit(duration)
+	# We will use a fixed duration for the fade effect.
+	# Adjust this value to match the feel of your drop animation.
+	var drop_duration = 0.5 
+	is_dropping.emit(drop_duration)
 
 func _on_animation_finished():
 	if animation == "jump":

@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://bmnejmb6wsuj3"]
+
+[ext_resource type="Texture2D" uid="uid://ekwckylfl504" path="res://assets/visual/accessories/hooves_red.png" id="1_bn621"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4004"]
+atlas = ExtResource("1_bn621")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pap54"]
+atlas = ExtResource("1_bn621")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gddh"]
+atlas = ExtResource("1_bn621")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5x2eq"]
+atlas = ExtResource("1_bn621")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_755gk"]
+atlas = ExtResource("1_bn621")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6bis"]
+atlas = ExtResource("1_bn621")
+region = Rect2(64, 128, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4004")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pap54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gddh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5x2eq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_755gk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6bis")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

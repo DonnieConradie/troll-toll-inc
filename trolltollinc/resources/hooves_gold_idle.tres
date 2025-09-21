@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://yvq272xuyoub"]
+
+[ext_resource type="Texture2D" uid="uid://ddepxr6p7d38f" path="res://assets/visual/accessories/hooves_idle_gold.png" id="1_yp002"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qdsd"]
+atlas = ExtResource("1_yp002")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3rwt"]
+atlas = ExtResource("1_yp002")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k12rj"]
+atlas = ExtResource("1_yp002")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idfwq"]
+atlas = ExtResource("1_yp002")
+region = Rect2(64, 64, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qdsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3rwt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k12rj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idfwq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

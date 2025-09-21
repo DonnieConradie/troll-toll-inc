@@ -6,7 +6,13 @@ signal dialogue_trigger_reached
 signal final_position_reached
 signal timer_ran_out
 
-@onready var sprite = $AnimatedSprite2D
+@onready var body_sprite = $BodySprite
+@onready var horns_sprite = $BodySprite/Horns
+@onready var head_accessory_sprite = $BodySprite/HeadAccessory
+@onready var body_accessory_sprite = $BodySprite/BodyAccessory
+@onready var hand_accessory_sprite = $BodySprite/HandAccessory
+@onready var hooves_sprite = $BodySprite/Hooves
+@onready var animation_player = $AnimationPlayer
 @onready var timer = $Timer
 @onready var timer_label = $Label
 @onready var dialogue_bubble = $DialogueBubble
@@ -19,6 +25,54 @@ var target_position: Vector2
 
 enum State { APPROACHING_TRIGGER, APPROACHING_BRIDGE, WAITING, DEPARTING }
 var current_state = State.APPROACHING_TRIGGER
+
+var goat_data: Dictionary
+
+# --- Initialization ---
+
+func initialize(data: Dictionary, start_pos: Vector2, dialogue_pos: Vector2, bridge_pos: Vector2):
+	goat_data = data
+	apply_goat_data()
+	
+	position = start_pos
+	target_position = dialogue_pos
+	set_silhouette(true)
+	animation_player.play("walk")
+	body_sprite.flip_h = false
+	
+	dialogue_trigger_reached.connect(func(): 
+		current_state = State.APPROACHING_BRIDGE
+		target_position = bridge_pos
+	)
+
+func apply_goat_data():
+	var size = goat_data["size"]
+	scale = Vector2(abs(size), abs(size))
+	
+	var components = goat_data["components"]
+	load_accessory(horns_sprite, components["horns"])
+	load_accessory(head_accessory_sprite, components["head"])
+	load_accessory(body_accessory_sprite, components["body"])
+	load_accessory(hand_accessory_sprite, components["hand"])
+	
+	var hooves_type = components["feet"]
+	if hooves_type != "none":
+		# --- THIS IS THE CORRECTED LINE ---
+		# We add the "hooves_" prefix to match your resource names.
+		hooves_sprite.animation = "hooves_" + hooves_type + "_idle"
+		hooves_sprite.visible = true
+	else:
+		hooves_sprite.visible = false
+
+func load_accessory(sprite: Sprite2D, accessory_name: String):
+	if accessory_name != "none":
+		sprite.texture = load("res://assets/visual/accessories/" + accessory_name + ".png")
+		sprite.visible = true
+	else:
+		sprite.visible = false
+
+
+# --- Movement & State Machine ---
 
 func _physics_process(delta):
 	if current_state == State.WAITING:
@@ -39,18 +93,6 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-func initialize(start_pos: Vector2, dialogue_pos: Vector2, bridge_pos: Vector2):
-	position = start_pos
-	target_position = dialogue_pos
-	set_silhouette(true)
-	sprite.play("walk")
-	sprite.flip_h = false
-	
-	dialogue_trigger_reached.connect(func(): 
-		current_state = State.APPROACHING_BRIDGE
-		target_position = bridge_pos
-	)
-
 func on_arrival_at_target():
 	if current_state == State.APPROACHING_TRIGGER:
 		position = target_position
@@ -59,7 +101,7 @@ func on_arrival_at_target():
 		if velocity != Vector2.ZERO: return
 		position = target_position
 		current_state = State.WAITING
-		sprite.play("idle")
+		animation_player.play("idle")
 		get_tree().create_timer(0.5).timeout.connect(func(): final_position_reached.emit())
 	elif current_state == State.DEPARTING:
 		action_complete.emit()
@@ -70,19 +112,23 @@ func depart(is_safe_exit: bool):
 	timer.stop()
 	
 	current_state = State.DEPARTING
-	sprite.play("walk")
+	animation_player.play("walk")
 
 	if is_safe_exit:
 		target_position = position + Vector2(400, 0)
-		sprite.flip_h = false
+		scale.x = goat_data["size"] # Reset to normal scale
 	else:
 		target_position = position - Vector2(400, 0)
-		sprite.flip_h = true
+		scale.x = -goat_data["size"] # Flip by making scale negative
 	
 	timer_label.hide()
 	dialogue_bubble.hide()
 
+
+# --- UI & Effects ---
+
 func on_timer_timeout():
+	timer_ran_out.emit()
 	depart(false)
 
 func reveal_and_start_timer():
@@ -90,22 +136,19 @@ func reveal_and_start_timer():
 	set_silhouette(false)
 	timer_label.show()
 	timer.start()
-	
-	var control_tween = create_tween()
-	return control_tween
+	return create_tween()
 
 func show_dialogue(text: String):
 	dialogue_bubble.text = text
 	dialogue_bubble.show()
-	# Return the timer so Main knows when it's done
 	return get_tree().create_timer(3.0)
 
 func set_silhouette(is_silhouetted: bool):
 	if is_silhouetted:
-		sprite.modulate = Color.BLACK
+		modulate = Color.BLACK
 	else:
 		var tween = create_tween()
-		tween.tween_property(sprite, "modulate", Color.WHITE, 0.3).from_current()
+		tween.tween_property(self, "modulate", Color.WHITE, 0.3).from_current()
 
 func _ready():
 	timer.wait_time = wait_duration

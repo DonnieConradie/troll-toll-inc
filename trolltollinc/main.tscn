@@ -405,7 +405,7 @@ material = SubResource("ShaderMaterial_d13ii")
 position = Vector2(-40, 152)
 
 [node name="BridgePoint" type="Marker2D" parent="TopWorld"]
-position = Vector2(160, 152)
+position = Vector2(184, 152)
 
 [node name="ExitPointRight" type="Marker2D" parent="TopWorld"]
 position = Vector2(504, 152)
@@ -418,7 +418,7 @@ offset_bottom = 149.0
 texture = ExtResource("3_yaehf")
 
 [node name="DialogueTriggerPoint" type="Marker2D" parent="."]
-position = Vector2(8, 152)
+position = Vector2(48, 152)
 
 [node name="Bridge" type="Sprite2D" parent="."]
 texture_filter = 1
