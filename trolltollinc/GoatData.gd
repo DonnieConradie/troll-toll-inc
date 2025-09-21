@@ -1,21 +1,22 @@
 # GoatData.gd
+# GoatData.gd
 extends Node
 
 const DAY_1_GOATS = [
 	{
 		"dialogue": "Please let me pass! My bigger brother is coming next!",
-		"size": 0.8,
+		"body_type": "skinny",
 		"components": {
 			"horns": "horns_x2_normal",
 			"head": "none",
 			"body": "none",
 			"hand": "none",
-			"feet": "normal" # We just need the color/type, e.g., "red", "gold"
+			"feet": "normal"
 		}
 	},
 	{
 		"dialogue": "Careful, troll! My biggest brother is right behind me!",
-		"size": 1.0,
+		"body_type": "skinny",
 		"components": {
 			"horns": "horns_x2_normal",
 			"head": "none",
@@ -26,7 +27,7 @@ const DAY_1_GOATS = [
 	},
 	{
 		"dialogue": "I am the biggest of the brothers! I fear no troll!",
-		"size": 1.2,
+		"body_type": "normal",
 		"components": {
 			"horns": "horns_x2_gold",
 			"head": "none",

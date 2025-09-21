@@ -1,4 +1,3 @@
-# BridgeGoer.gd
 extends CharacterBody2D
 
 signal action_complete
@@ -18,7 +17,7 @@ signal timer_ran_out
 @onready var dialogue_bubble = $DialogueBubble
 
 const WALK_SPEED = 70.0
-const DECELERATION = 2.0
+const DECELERATION = 3.0
 
 var wait_duration = 10.0
 var target_position: Vector2
@@ -27,52 +26,6 @@ enum State { APPROACHING_TRIGGER, APPROACHING_BRIDGE, WAITING, DEPARTING }
 var current_state = State.APPROACHING_TRIGGER
 
 var goat_data: Dictionary
-
-# --- Initialization ---
-
-func initialize(data: Dictionary, start_pos: Vector2, dialogue_pos: Vector2, bridge_pos: Vector2):
-	goat_data = data
-	apply_goat_data()
-	
-	position = start_pos
-	target_position = dialogue_pos
-	set_silhouette(true)
-	animation_player.play("walk")
-	body_sprite.flip_h = false
-	
-	dialogue_trigger_reached.connect(func(): 
-		current_state = State.APPROACHING_BRIDGE
-		target_position = bridge_pos
-	)
-
-func apply_goat_data():
-	var size = goat_data["size"]
-	scale = Vector2(abs(size), abs(size))
-	
-	var components = goat_data["components"]
-	load_accessory(horns_sprite, components["horns"])
-	load_accessory(head_accessory_sprite, components["head"])
-	load_accessory(body_accessory_sprite, components["body"])
-	load_accessory(hand_accessory_sprite, components["hand"])
-	
-	var hooves_type = components["feet"]
-	if hooves_type != "none":
-		# --- THIS IS THE CORRECTED LINE ---
-		# We add the "hooves_" prefix to match your resource names.
-		hooves_sprite.animation = "hooves_" + hooves_type + "_idle"
-		hooves_sprite.visible = true
-	else:
-		hooves_sprite.visible = false
-
-func load_accessory(sprite: Sprite2D, accessory_name: String):
-	if accessory_name != "none":
-		sprite.texture = load("res://assets/visual/accessories/" + accessory_name + ".png")
-		sprite.visible = true
-	else:
-		sprite.visible = false
-
-
-# --- Movement & State Machine ---
 
 func _physics_process(delta):
 	if current_state == State.WAITING:
@@ -93,6 +46,52 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+func initialize(data: Dictionary, start_pos: Vector2, dialogue_pos: Vector2, bridge_pos: Vector2):
+	goat_data = data
+	apply_goat_data()
+	
+	position = start_pos
+	target_position = dialogue_pos
+	set_silhouette(true)
+	set_animation_state("walk")
+	
+	dialogue_trigger_reached.connect(func(): 
+		current_state = State.APPROACHING_BRIDGE
+		target_position = bridge_pos
+	)
+
+func apply_goat_data():
+	var components = goat_data["components"]
+	load_accessory(horns_sprite, components["horns"])
+	load_accessory(head_accessory_sprite, components["head"])
+	load_accessory(body_accessory_sprite, components["body"])
+	load_accessory(hand_accessory_sprite, components["hand"])
+	
+func load_accessory(sprite: Sprite2D, accessory_name: String):
+	if accessory_name != "none":
+		sprite.texture = load("res://assets/visual/accessories/" + accessory_name + ".png")
+		sprite.visible = true
+	else:
+		sprite.visible = false
+
+func set_animation_state(state_name: String):
+	var body_type = goat_data.get("body_type", "normal")
+
+	# --- THIS IS THE FIX ---
+	if body_type == "normal":
+		body_sprite.animation = state_name # Results in "walk" or "idle"
+	else:
+		body_sprite.animation = body_type + "_" + state_name # Results in "skinny_walk" or "skinny_idle"
+	
+	var hooves_type = goat_data["components"]["feet"]
+	if hooves_type != "none":
+		hooves_sprite.animation = "hooves_" + hooves_type + "_" + state_name
+		hooves_sprite.visible = true
+	else:
+		hooves_sprite.visible = false
+	
+	animation_player.play(state_name)
+
 func on_arrival_at_target():
 	if current_state == State.APPROACHING_TRIGGER:
 		position = target_position
@@ -101,7 +100,7 @@ func on_arrival_at_target():
 		if velocity != Vector2.ZERO: return
 		position = target_position
 		current_state = State.WAITING
-		animation_player.play("idle")
+		set_animation_state("idle")
 		get_tree().create_timer(0.5).timeout.connect(func(): final_position_reached.emit())
 	elif current_state == State.DEPARTING:
 		action_complete.emit()
@@ -112,20 +111,23 @@ func depart(is_safe_exit: bool):
 	timer.stop()
 	
 	current_state = State.DEPARTING
-	animation_player.play("walk")
+	set_animation_state("walk")
 
 	if is_safe_exit:
 		target_position = position + Vector2(400, 0)
-		scale.x = goat_data["size"] # Reset to normal scale
+		set_flipped(false)
 	else:
 		target_position = position - Vector2(400, 0)
-		scale.x = -goat_data["size"] # Flip by making scale negative
+		set_flipped(true)
 	
 	timer_label.hide()
 	dialogue_bubble.hide()
 
-
-# --- UI & Effects ---
+func set_flipped(is_flipped: bool):
+	body_sprite.flip_h = is_flipped
+	for child in body_sprite.get_children():
+		if child is Sprite2D or child is AnimatedSprite2D:
+			child.flip_h = is_flipped
 
 func on_timer_timeout():
 	timer_ran_out.emit()
