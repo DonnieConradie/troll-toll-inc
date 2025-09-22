@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://dtxkods0rn5sr"]
+[gd_scene load_steps=85 format=3 uid="uid://dtxkods0rn5sr"]
 
 [ext_resource type="Script" uid="uid://camgs5n1477cn" path="res://bridge_goer.gd" id="1_5gy0k"]
 [ext_resource type="Texture2D" uid="uid://c21gcebh2wjeo" path="res://assets/visual/animations/goat_idle.png" id="2_1pga1"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://ssta18vcx5yy" path="res://assets/visual/animations/Goat_skinny_idle.png" id="3_uyyvj"]
 [ext_resource type="Texture2D" uid="uid://ct5ygicy84r4t" path="res://assets/visual/accessories/horns_x2_gold.png" id="4_tr22e"]
 [ext_resource type="Texture2D" uid="uid://x8huigubcck6" path="res://assets/visual/animations/Goat_skinny.png" id="4_va3ef"]
-[ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="5_1pga1"]
 [ext_resource type="Texture2D" uid="uid://d1ndvcw5scsjt" path="res://assets/visual/accessories/sunglasses_gold.png" id="5_obdcg"]
 [ext_resource type="Texture2D" uid="uid://dpaqq6n2bifb1" path="res://assets/visual/accessories/tie_gold.png" id="6_uyyvj"]
 [ext_resource type="Texture2D" uid="uid://dyle51mstovrp" path="res://assets/visual/accessories/hooves_idle_blue.png" id="7_c64c3"]
@@ -809,12 +808,6 @@ _data = {
 &"walk": SubResource("Animation_rjc3d")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k330j"]
-shader = ExtResource("5_1pga1")
-shader_parameter/jiggle_amount = 0.5
-shader_parameter/jiggle_speed = 4.0
-shader_parameter/character_width_factor = 20.0
-
 [node name="BridgeGoer" type="CharacterBody2D"]
 script = ExtResource("1_5gy0k")
 
@@ -867,19 +860,6 @@ theme_override_font_sizes/font_size = 12
 text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="DialogueBubble" type="Label" parent="."]
-texture_filter = 1
-material = SubResource("ShaderMaterial_k330j")
-custom_minimum_size = Vector2(32, 0)
-offset_left = -24.0
-offset_top = -48.0
-offset_right = 86.0
-offset_bottom = -28.0
-theme_override_colors/font_color = Color(0.223529, 0.168627, 0.207843, 1)
-theme_override_fonts/font = ExtResource("3_5sqim")
-theme_override_font_sizes/font_size = 13
-text = "I am the chosen one!"
 
 [node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="."]
 max_distance = 260.0

@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgvs7m8hbmhaq"]
+[gd_scene load_steps=11 format=3 uid="uid://cgvs7m8hbmhaq"]
 
 [ext_resource type="Script" uid="uid://cm8wmhrcgrlbo" path="res://Intro.gd" id="1_ayt76"]
 [ext_resource type="AudioStream" uid="uid://h7xfjv203wrb" path="res://assets/sound/intro_fax.MP3" id="2_ayt76"]
+[ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="3_7a8ye"]
+[ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="4_y72e6"]
+[ext_resource type="FontFile" uid="uid://d0w1s1dm53moq" path="res://assets/fonts/Pixel Square 10.ttf" id="5_u2rf6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0a7ni"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y72e6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2rf6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y6ycx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6ycx"]
+shader = ExtResource("4_y72e6")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 5.0
+shader_parameter/character_width_factor = 25.0
 
 [node name="Intro" type="Node2D"]
 script = ExtResource("1_ayt76")
@@ -13,5 +30,37 @@ color = Color(0, 0, 0, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_ayt76")
+
+[node name="SkipButton" type="Button" parent="."]
+offset_left = 224.0
+offset_top = 216.0
+offset_right = 256.0
+offset_bottom = 228.0
+theme_override_fonts/font = ExtResource("3_7a8ye")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_0a7ni")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_y72e6")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_u2rf6")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_y6ycx")
+text = "SKIP"
+
+[node name="TransitionLabel" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_y6ycx")
+custom_minimum_size = Vector2(128, 0)
+offset_right = 480.0
+offset_bottom = 272.0
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_shadow_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("5_u2rf6")
+theme_override_font_sizes/font_size = 27
+text = "DAY 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]

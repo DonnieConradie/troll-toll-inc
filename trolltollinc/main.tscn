@@ -1,11 +1,11 @@
-[gd_scene load_steps=108 format=3 uid="uid://c480mvl7wq6rl"]
+[gd_scene load_steps=114 format=3 uid="uid://c480mvl7wq6rl"]
 
 [ext_resource type="Script" uid="uid://gbv1yeif4hmx" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="Shader" uid="uid://bt0tug2apdnl1" path="res://assets/shaders/silhouette_shader.gdshader" id="2_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://ds2fsbkwkj6sg" path="res://assets/visual/Foreground_01.png" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://d03bt6ojh1lri" path="res://assets/visual/sky_01.png" id="3_074og"]
-[ext_resource type="Texture2D" uid="uid://dqb15wf11nrt0" path="res://assets/visual/Trees_01.png" id="3_yaehf"]
 [ext_resource type="Texture2D" uid="uid://ck588puvy488i" path="res://assets/visual/Bridge_03.png" id="4_074og"]
+[ext_resource type="Texture2D" uid="uid://76yedqvm0tee" path="res://assets/visual/Trees_02.png" id="4_htxhm"]
 [ext_resource type="Texture2D" uid="uid://hcw3qju67v7s" path="res://assets/visual/animations/Troll_drop_animation_03.png" id="5_w48qg"]
 [ext_resource type="Script" uid="uid://dtunhkn6upjgf" path="res://troll.gd" id="6_7mycd"]
 [ext_resource type="Texture2D" uid="uid://cgrtgwtoml7qv" path="res://assets/visual/animations/Troll_idle_animation.png" id="6_vivmo"]
@@ -14,11 +14,11 @@
 [ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="8_dg77c"]
 [ext_resource type="Texture2D" uid="uid://wy14njarn8hv" path="res://assets/visual/animations/Troll_peek_animation.png" id="8_yaehf"]
 [ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="9_2cqfq"]
-[ext_resource type="Texture2D" uid="uid://d277032wdl7u4" path="res://assets/visual/ui/bar_under_small.png" id="9_ycdy4"]
-[ext_resource type="Texture2D" uid="uid://bnciy5miaslmj" path="res://assets/visual/ui/hunger_bar_fill_small.png" id="10_w48qg"]
-[ext_resource type="Texture2D" uid="uid://cnxsaqphtrflv" path="res://assets/visual/ui/scare_bar_fill_small.png" id="11_vivmo"]
 [ext_resource type="AudioStream" uid="uid://cihwuhphuwvfv" path="res://assets/sound/Landing_02.MP3" id="12_xuqvo"]
+[ext_resource type="Texture2D" uid="uid://gvd7g3kenr4n" path="res://assets/visual/ui/warning_01.png" id="15_jq2sk"]
 [ext_resource type="Texture2D" uid="uid://co1ty75oooeq6" path="res://assets/visual/Colour palette - retrotronic-8x.png" id="15_vivmo"]
+[ext_resource type="Texture2D" uid="uid://gu8eb7tk6g2b" path="res://assets/visual/ui/warning_02.png" id="16_4k2k6"]
+[ext_resource type="Texture2D" uid="uid://bdiut2ucvgc6s" path="res://assets/visual/ui/warning_03.png" id="17_0rl1p"]
 [ext_resource type="FontFile" uid="uid://d0w1s1dm53moq" path="res://assets/fonts/Pixel Square 10.ttf" id="18_ryguw"]
 [ext_resource type="Texture2D" uid="uid://wwkb4i4nyhpw" path="res://assets/visual/printer_table.png" id="19_82xsv"]
 [ext_resource type="Texture2D" uid="uid://dv83gktlwnro0" path="res://assets/visual/animations/printer_animation.png" id="20_getpj"]
@@ -365,11 +365,48 @@ random_pitch = 1.1
 streams_count = 1
 stream_0/stream = ExtResource("12_xuqvo")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
 shader = ExtResource("9_2cqfq")
-shader_parameter/jiggle_amount = 0.32
-shader_parameter/jiggle_speed = 10.0
-shader_parameter/character_width_factor = 15.0
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 4.0
+shader_parameter/character_width_factor = 20.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4k2k6"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 5.0
+shader_parameter/character_width_factor = 25.0
+
+[sub_resource type="Shader" id="Shader_htxhm"]
+code = "// res/shaders/jiggle_text.gdshader
+shader_type canvas_item;
+
+// Uniforms to control the effect from GDScript
+uniform float jiggle_amount : hint_range(0.0, 5.0) = 1.5;
+uniform float jiggle_speed : hint_range(0.0, 20.0) = 10.0;
+// --- NEW: Controls the width of each \"jumping\" character block ---
+uniform float character_width_factor : hint_range(0.0, 50.0) = 15.0;
+
+void vertex() {
+	// --- NEW LOGIC ---
+	// 1. Calculate a unique, stable ID for each character based on its horizontal position.
+	//    By flooring the U coordinate, we ensure all vertices within the same character column
+	//    get the same base value for their sine wave.
+	float char_id = floor(UV.x * character_width_factor);
+
+	// 2. Calculate the vertical offset using this new character ID.
+	//    This makes the entire character column jump up and down as a single unit.
+	float y_offset = sin(TIME * jiggle_speed + char_id) * jiggle_amount;
+
+	// 3. Apply the same offset to all vertices of the character.
+	VERTEX.y += y_offset;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jq2sk"]
+shader = SubResource("Shader_htxhm")
+shader_parameter/jiggle_amount = 1.0
+shader_parameter/jiggle_speed = 2.0
+shader_parameter/character_width_factor = 8.607
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
 shader = ExtResource("9_2cqfq")
@@ -383,17 +420,13 @@ shader_parameter/jiggle_amount = 0.2
 shader_parameter/jiggle_speed = 10.0
 shader_parameter/character_width_factor = 15.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_82xsv"]
-shader = ExtResource("9_2cqfq")
-shader_parameter/jiggle_amount = 0.2
-shader_parameter/jiggle_speed = 10.0
-shader_parameter/character_width_factor = 15.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ok6jj"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_getpj"]
-shader = ExtResource("9_2cqfq")
-shader_parameter/jiggle_amount = 0.2
-shader_parameter/jiggle_speed = 10.0
-shader_parameter/character_width_factor = 15.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1qrp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_come4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d13ii"]
 
@@ -420,6 +453,12 @@ shader = ExtResource("9_2cqfq")
 shader_parameter/jiggle_amount = 1.5
 shader_parameter/jiggle_speed = 10.0
 shader_parameter/character_width_factor = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.853
+shader_parameter/jiggle_speed = 15.902
+shader_parameter/character_width_factor = 23.607
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wu3dr"]
 atlas = ExtResource("21_d13ii")
@@ -533,24 +572,17 @@ offset_right = 480.0
 offset_bottom = 270.0
 texture = ExtResource("3_074og")
 
-[node name="Background4" type="ColorRect" parent="."]
-use_parent_material = true
-offset_top = 152.0
-offset_right = 480.0
-offset_bottom = 270.0
-color = Color(0.203922, 0.305882, 0.360784, 1)
-
 [node name="TopWorld" type="Node2D" parent="."]
 material = SubResource("ShaderMaterial_d13ii")
 
 [node name="SpawnPointLeft" type="Marker2D" parent="TopWorld"]
-position = Vector2(-40, 152)
+position = Vector2(-24, 148)
 
 [node name="BridgePoint" type="Marker2D" parent="TopWorld"]
-position = Vector2(184, 152)
+position = Vector2(176, 148)
 
 [node name="ExitPointRight" type="Marker2D" parent="TopWorld"]
-position = Vector2(504, 152)
+position = Vector2(496, 148)
 
 [node name="Trees" type="TextureRect" parent="TopWorld"]
 use_parent_material = true
@@ -558,10 +590,10 @@ offset_left = -4.0
 offset_top = 20.0
 offset_right = 476.0
 offset_bottom = 149.0
-texture = ExtResource("3_yaehf")
+texture = ExtResource("4_htxhm")
 
 [node name="DialogueTriggerPoint" type="Marker2D" parent="."]
-position = Vector2(48, 152)
+position = Vector2(24, 148)
 
 [node name="Bridge" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -584,29 +616,51 @@ script = ExtResource("6_7mycd")
 [node name="SoundPlayer" type="AudioStreamPlayer" parent="Troll"]
 stream = SubResource("AudioStreamRandomizer_facbu")
 
-[node name="TrollDialogueBubble" type="Label" parent="."]
-texture_filter = 1
-material = SubResource("ShaderMaterial_yaehf")
-custom_minimum_size = Vector2(32, 0)
-offset_left = 184.0
-offset_top = 120.0
-offset_right = 294.0
-offset_bottom = 140.0
-theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
-theme_override_colors/font_outline_color = Color(0.223529, 0.168627, 0.207843, 1)
-theme_override_constants/outline_size = 1
-theme_override_fonts/font = ExtResource("8_dg77c")
-theme_override_font_sizes/font_size = 13
-text = "Who goes there!?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="Violations" type="Label" parent="CanvasLayer"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_htxhm")
+custom_minimum_size = Vector2(50, 0)
+offset_left = 4.0
+offset_top = 7.0
+offset_right = 54.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0.65098, 0.239216, 0.270588, 1)
+theme_override_colors/font_outline_color = Color(0.299145, 0.0851481, 0.102133, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 9
+text = "Mandate
+Violations"
+horizontal_alignment = 2
+vertical_alignment = 2
+autowrap_mode = 3
+uppercase = true
+
+[node name="DayTitleLabel" type="Label" parent="CanvasLayer"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_4k2k6")
+offset_left = 128.0
+offset_top = 8.0
+offset_right = 352.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_outline_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 20
+text = "DAY 1 - Mandatory Appetizer"
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-offset_left = 265.0
+offset_left = 48.0
 offset_right = 480.0
-offset_bottom = 80.0
+offset_bottom = 44.0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -614,11 +668,32 @@ theme_override_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 197
+
+[node name="StrikesContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Strike3" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/StrikesContainer"]
+material = SubResource("ShaderMaterial_jq2sk")
+layout_mode = 2
+texture = ExtResource("17_0rl1p")
+stretch_mode = 2
+
+[node name="Strike2" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/StrikesContainer"]
+material = SubResource("ShaderMaterial_jq2sk")
+layout_mode = 2
+texture = ExtResource("16_4k2k6")
+stretch_mode = 2
+
+[node name="Strike1" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/StrikesContainer"]
+material = SubResource("ShaderMaterial_jq2sk")
+layout_mode = 2
+texture = ExtResource("15_jq2sk")
+stretch_mode = 2
 
 [node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
-size_flags_vertical = 0
 theme_override_constants/separation = 3
 
 [node name="GoldLabel" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
@@ -644,31 +719,17 @@ size_flags_vertical = 4
 texture = ExtResource("7_efxa6")
 stretch_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-alignment = 2
-
-[node name="HungerBar" type="TextureProgressBar" parent="CanvasLayer/MarginContainer/HBoxContainer/HBoxContainer2"]
-material = SubResource("ShaderMaterial_82xsv")
-layout_mode = 2
-value = 50.0
-fill_mode = 3
-texture_under = ExtResource("9_ycdy4")
-texture_progress = ExtResource("10_w48qg")
-
-[node name="ScareBar" type="TextureProgressBar" parent="CanvasLayer/MarginContainer/HBoxContainer/HBoxContainer2"]
-material = SubResource("ShaderMaterial_getpj")
-layout_mode = 2
-value = 50.0
-fill_mode = 3
-texture_under = ExtResource("9_ycdy4")
-texture_progress = ExtResource("11_vivmo")
-
 [node name="EatButton" type="Button" parent="CanvasLayer"]
-offset_left = 128.0
-offset_top = 24.0
-offset_right = 200.0
-offset_bottom = 64.0
+offset_left = 172.0
+offset_top = 148.0
+offset_right = 228.0
+offset_bottom = 160.0
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
 text = "EAT"
 
 [node name="GrabPaperButton" type="Button" parent="CanvasLayer"]
@@ -677,6 +738,8 @@ offset_left = 117.0
 offset_top = 175.0
 offset_right = 149.0
 offset_bottom = 195.0
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 1
@@ -695,20 +758,33 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_htxhm")
 text = "GRAB"
 
 [node name="PassButton" type="Button" parent="CanvasLayer"]
-offset_left = 280.0
-offset_top = 24.0
-offset_right = 352.0
-offset_bottom = 64.0
+offset_left = 253.0
+offset_top = 148.0
+offset_right = 309.0
+offset_bottom = 160.0
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
 text = "PASS"
 
 [node name="InspectButton" type="Button" parent="CanvasLayer"]
-offset_left = 128.0
-offset_top = 24.0
-offset_right = 201.0
-offset_bottom = 64.0
+offset_left = 172.0
+offset_top = 148.0
+offset_right = 228.0
+offset_bottom = 160.0
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
 text = "INSPECT"
 
 [node name="CensoredLabel" type="Label" parent="CanvasLayer"]
+visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_ryguw")
 custom_minimum_size = Vector2(128, 0)
@@ -728,8 +804,50 @@ text = "CENSORED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColourPalette-Retrotronic-8x" type="Sprite2D" parent="CanvasLayer"]
-position = Vector2(176, 288)
+[node name="TrollDialogueBubble" type="Label" parent="CanvasLayer"]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_yaehf")
+custom_minimum_size = Vector2(32, 0)
+offset_left = 168.0
+offset_top = 93.0
+offset_right = 311.0
+offset_bottom = 141.0
+theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_colors/font_outline_color = Color(0.298039, 0.0862745, 0.101961, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 16
+text = "Who goes there!? "
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="DialogueContainer" type="Node2D" parent="CanvasLayer"]
+position = Vector2(240, 104)
+
+[node name="DialogueBubble" type="Label" parent="CanvasLayer/DialogueContainer"]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_htxhm")
+custom_minimum_size = Vector2(32, 0)
+offset_left = -58.0
+offset_top = -10.0
+offset_right = 56.0
+offset_bottom = 4.0
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_outline_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 13
+text = "I am the chosen one!"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="ColourPalette-Retrotronic-8x" type="Sprite2D" parent="CanvasLayer/DialogueContainer"]
+position = Vector2(184, 192)
 texture = ExtResource("15_vivmo")
 
 [node name="FaxMachinetable" type="Sprite2D" parent="."]

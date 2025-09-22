@@ -4,6 +4,7 @@ signal action_complete
 signal dialogue_trigger_reached
 signal final_position_reached
 signal timer_ran_out
+signal wants_to_speak(text)
 
 @onready var body_sprite = $BodySprite
 @onready var horns_sprite = $BodySprite/Horns
@@ -14,7 +15,6 @@ signal timer_ran_out
 @onready var animation_player = $AnimationPlayer
 @onready var timer = $Timer
 @onready var timer_label = $Label
-@onready var dialogue_bubble = $DialogueBubble
 @onready var footstep_player = $FootstepPlayer
 
 const WALK_SPEED = 70.0
@@ -134,7 +134,6 @@ func depart(is_safe_exit: bool):
 		set_flipped(true)
 	
 	timer_label.hide()
-	dialogue_bubble.hide()
 
 func set_flipped(is_flipped: bool):
 	body_sprite.flip_h = is_flipped
@@ -147,16 +146,19 @@ func on_timer_timeout():
 	depart(false)
 
 func reveal_and_start_timer():
-	dialogue_bubble.hide()
+	# dialogue_bubble.hide() is no longer needed here
 	set_silhouette(false)
 	timer_label.show()
 	timer.start()
 	return create_tween()
 
 func show_dialogue(text: String):
-	dialogue_bubble.text = text
-	dialogue_bubble.show()
+	wants_to_speak.emit(text)
 	return get_tree().create_timer(3.0)
+
+func stop_timer():
+	timer.stop()
+	timer_label.hide()
 
 func set_silhouette(is_silhouetted: bool):
 	if is_silhouetted:
@@ -170,7 +172,6 @@ func _ready():
 	timer.one_shot = true
 	timer.timeout.connect(on_timer_timeout)
 	timer_label.hide()
-	dialogue_bubble.hide()
 
 func _process(delta):
 	if !timer.is_stopped():

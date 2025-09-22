@@ -18,6 +18,6 @@ func show_decree(text: String):
 	show()
 
 func on_accept_pressed():
-	SoundManager.play("ui_click")
+	SoundManager.play("drumroll")
 	mandate_accepted.emit()
 	queue_free() # The panel destroys itself after being accepted.

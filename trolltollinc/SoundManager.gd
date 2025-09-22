@@ -11,6 +11,7 @@ func _ready():
 	add_sound("paper_grab", "res://assets/sound/paper_grab.mp3")
 	add_sound("fax_noises", "res://assets/sound/fax_noises.mp3")
 	add_sound("printing", "res://assets/sound/printing.mp3")
+	add_sound("drumroll", "res://assets/sound/drumroll_01.MP3")
 
 func add_sound(sound_name, path):
 	var p = AudioStreamPlayer.new()
