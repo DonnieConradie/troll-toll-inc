@@ -17,6 +17,9 @@ func show_decree(text: String):
 	tween.tween_property(self, "position:y", 0, 0.5)
 	show()
 
+func set_accept_button_text(text: String):
+	accept_button.text = text
+
 func on_accept_pressed():
 	SoundManager.play("drumroll")
 	mandate_accepted.emit()

@@ -10,6 +10,7 @@ extends Node2D
 @onready var inspect_button = $CanvasLayer/InspectButton
 @onready var eat_button = $CanvasLayer/EatButton
 @onready var pass_button = $CanvasLayer/PassButton
+@onready var view_mandate_button: Button = $CanvasLayer/ViewMandateButton
 @onready var censored_label = $CanvasLayer/CensoredLabel
 @onready var dialogue_trigger_point = $DialogueTriggerPoint
 @onready var troll_dialogue_bubble = $CanvasLayer/TrollDialogueBubble
@@ -39,6 +40,7 @@ func _ready():
 	eat_button.pressed.connect(on_eat_button_pressed)
 	pass_button.pressed.connect(on_pass_button_pressed)
 	troll.is_dropping.connect(on_troll_is_dropping)
+	view_mandate_button.pressed.connect(on_view_mandate_pressed)
 	
 	censored_label.hide()
 	troll_dialogue_bubble.hide()
@@ -160,6 +162,32 @@ func on_goat_action_complete():
 	current_state = GameState.NONE
 	set_button_visibility(false, false, false)
 	get_tree().create_timer(2.0).timeout.connect(spawn_character)
+
+func on_view_mandate_pressed():
+	if current_state == GameState.PAUSED or current_state == GameState.NONE: return
+
+	current_state = GameState.PAUSED
+	get_tree().paused = true
+	
+	var decree_panel = DECREE_PANEL_SCENE.instantiate()
+	decree_panel.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(decree_panel)
+	
+	var decree_text = GoatData.DECREE_TEXTS[current_day]
+	decree_panel.show_decree(decree_text)
+	
+	decree_panel.set_accept_button_text("Got it")
+	
+	decree_panel.mandate_accepted.connect(func():
+		get_tree().paused = false
+		if troll.get_target():
+			if troll.animation == "peek":
+				current_state = GameState.WAITING_FOR_DECISION
+			else:
+				current_state = GameState.WAITING_FOR_INSPECT
+		else:
+			current_state = GameState.NONE
+	)
 
 func on_inspect_button_pressed():
 	if current_state != GameState.WAITING_FOR_INSPECT: return
