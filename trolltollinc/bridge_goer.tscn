@@ -825,6 +825,10 @@ texture = ExtResource("4_tr22e")
 position = Vector2(0, -32)
 texture = ExtResource("5_obdcg")
 
+[node name="HeadAccessory2" type="Sprite2D" parent="BodySprite"]
+position = Vector2(0, -31)
+texture = ExtResource("5_obdcg")
+
 [node name="BodyAccessory" type="Sprite2D" parent="BodySprite"]
 position = Vector2(0, -32)
 texture = ExtResource("6_uyyvj")

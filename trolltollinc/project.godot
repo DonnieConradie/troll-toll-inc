@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="TrollTollInc"
-run/main_scene="uid://cgvs7m8hbmhaq"
+run/main_scene="uid://c4i2aydp1ossa"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="uid://bwiundmxqwlas"
+config/icon="uid://box7gpi43cpdy"
 
 [autoload]
 

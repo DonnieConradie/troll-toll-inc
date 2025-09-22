@@ -9,6 +9,7 @@ signal wants_to_speak(text)
 @onready var body_sprite = $BodySprite
 @onready var horns_sprite = $BodySprite/Horns
 @onready var head_accessory_sprite = $BodySprite/HeadAccessory
+@onready var head_accessory_2_sprite = $BodySprite/HeadAccessory2
 @onready var body_accessory_sprite = $BodySprite/BodyAccessory
 @onready var hand_accessory_sprite = $BodySprite/HandAccessory
 @onready var hooves_sprite = $BodySprite/Hooves
@@ -69,9 +70,11 @@ func initialize(data: Dictionary, start_pos: Vector2, dialogue_pos: Vector2, bri
 	)
 
 func apply_goat_data():
+	var body_type = goat_data.get("body_type", "normal")
 	var components = goat_data["components"]
 	load_accessory(horns_sprite, components["horns"])
 	load_accessory(head_accessory_sprite, components["head"])
+	load_accessory(head_accessory_2_sprite, components["head2"])
 	load_accessory(body_accessory_sprite, components["body"])
 	load_accessory(hand_accessory_sprite, components["hand"])
 	

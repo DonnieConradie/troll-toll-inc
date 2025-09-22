@@ -1,0 +1,286 @@
+[gd_scene load_steps=30 format=3 uid="uid://c4i2aydp1ossa"]
+
+[ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="1_fu7sn"]
+[ext_resource type="Texture2D" uid="uid://d03bt6ojh1lri" path="res://assets/visual/sky_01.png" id="1_nlkkf"]
+[ext_resource type="Script" uid="uid://b55kbcfyqyf4t" path="res://main_menu.gd" id="1_qe12f"]
+[ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="2_jix8l"]
+[ext_resource type="FontFile" uid="uid://d0w1s1dm53moq" path="res://assets/fonts/Pixel Square 10.ttf" id="3_glbon"]
+[ext_resource type="Texture2D" uid="uid://co1ty75oooeq6" path="res://assets/visual/Colour palette - retrotronic-8x.png" id="4_jix8l"]
+[ext_resource type="Texture2D" uid="uid://dv83gktlwnro0" path="res://assets/visual/animations/printer_animation.png" id="5_glbon"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nlkkf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qe12f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8qtwp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dy7ct"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fu7sn"]
+shader = ExtResource("2_jix8l")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 5.0
+shader_parameter/character_width_factor = 25.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jix8l"]
+shader = ExtResource("2_jix8l")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 4.0
+shader_parameter/character_width_factor = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlkkf"]
+atlas = ExtResource("5_glbon")
+region = Rect2(0, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qe12f"]
+atlas = ExtResource("5_glbon")
+region = Rect2(40, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qtwp"]
+atlas = ExtResource("5_glbon")
+region = Rect2(80, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dy7ct"]
+atlas = ExtResource("5_glbon")
+region = Rect2(0, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o4t1"]
+atlas = ExtResource("5_glbon")
+region = Rect2(40, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0k4wn"]
+atlas = ExtResource("5_glbon")
+region = Rect2(80, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5v2v"]
+atlas = ExtResource("5_glbon")
+region = Rect2(0, 64, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iotk1"]
+atlas = ExtResource("5_glbon")
+region = Rect2(40, 64, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w44g7"]
+atlas = ExtResource("5_glbon")
+region = Rect2(0, 64, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm266"]
+atlas = ExtResource("5_glbon")
+region = Rect2(80, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8g3n"]
+atlas = ExtResource("5_glbon")
+region = Rect2(40, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8u0te"]
+atlas = ExtResource("5_glbon")
+region = Rect2(0, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiatc"]
+atlas = ExtResource("5_glbon")
+region = Rect2(80, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg3m2"]
+atlas = ExtResource("5_glbon")
+region = Rect2(40, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojb7r"]
+atlas = ExtResource("5_glbon")
+region = Rect2(0, 0, 40, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e5qqf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nlkkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qe12f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qtwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dy7ct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0o4t1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0k4wn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5v2v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iotk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w44g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm266")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8g3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8u0te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiatc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg3m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojb7r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qe12f")
+
+[node name="Sky01" type="Sprite2D" parent="."]
+position = Vector2(240, 136)
+texture = ExtResource("1_nlkkf")
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 128.0
+offset_right = 288.0
+offset_bottom = 144.0
+theme_override_colors/font_disabled_color = Color(0.945664, 0.922156, 0.938192, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.43325, 0.342281, 0.40707, 1)
+theme_override_colors/font_hover_color = Color(0.358306, 0.2791, 0.335592, 1)
+theme_override_colors/font_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_colors/font_focus_color = Color(0.416558, 0.328048, 0.391108, 1)
+theme_override_colors/font_pressed_color = Color(0.118586, 0.0840047, 0.10872, 1)
+theme_override_fonts/font = ExtResource("1_fu7sn")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dy7ct")
+text = "BEGIN MANDATE"
+
+[node name="PassButton2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 152.0
+offset_right = 288.0
+offset_bottom = 168.0
+theme_override_colors/font_disabled_color = Color(0.125071, 0.1831, 0.173168, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.707607, 0.815362, 0.795354, 1)
+theme_override_colors/font_hover_color = Color(0.581017, 0.7115, 0.688004, 1)
+theme_override_colors/font_color = Color(0.478431, 0.611765, 0.588235, 1)
+theme_override_colors/font_focus_color = Color(0.356521, 0.475532, 0.454882, 1)
+theme_override_fonts/font = ExtResource("1_fu7sn")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dy7ct")
+text = "FULLSCREEN"
+
+[node name="PassButton3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 176.0
+offset_right = 288.0
+offset_bottom = 192.0
+theme_override_colors/font_disabled_color = Color(0.623849, 0.534736, 0.459469, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.870047, 0.815807, 0.770837, 1)
+theme_override_colors/font_hover_color = Color(0.899601, 0.856677, 0.821193, 1)
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_focus_color = Color(0.769635, 0.687613, 0.618944, 1)
+theme_override_colors/font_pressed_color = Color(0.909369, 0.870386, 0.838191, 1)
+theme_override_fonts/font = ExtResource("1_fu7sn")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dy7ct")
+text = "HOW TO PLAY"
+
+[node name="PassButton4" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 208.0
+offset_right = 288.0
+offset_bottom = 224.0
+theme_override_colors/font_disabled_color = Color(0.984173, 0.886327, 0.883941, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.95516, 0.680626, 0.679219, 1)
+theme_override_colors/font_hover_color = Color(0.892707, 0.444962, 0.460898, 1)
+theme_override_colors/font_outline_color = Color(0.832755, 0.349151, 0.376998, 1)
+theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_colors/font_focus_color = Color(0.577942, 0.200709, 0.229428, 1)
+theme_override_colors/font_pressed_color = Color(0.389542, 0.121499, 0.142635, 1)
+theme_override_fonts/font = ExtResource("1_fu7sn")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dy7ct")
+text = "EXIT"
+
+[node name="TransitionLabel" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_fu7sn")
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 0
+offset_left = 112.0
+offset_top = 40.0
+offset_right = 372.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_shadow_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("3_glbon")
+theme_override_font_sizes/font_size = 27
+text = "Troll Toll Inc."
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Violations" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_jix8l")
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = 192.0
+offset_top = 72.0
+offset_right = 288.0
+offset_bottom = 82.0
+theme_override_colors/font_color = Color(0.65098, 0.239216, 0.270588, 1)
+theme_override_colors/font_outline_color = Color(0.299145, 0.0851481, 0.102133, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("1_fu7sn")
+theme_override_font_sizes/font_size = 9
+text = "A Game by DonnieDev"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ColourPalette-Retrotronic-8x" type="Sprite2D" parent="."]
+position = Vector2(320, 168)
+texture = ExtResource("4_jix8l")
+
+[node name="Printer02" type="AnimatedSprite2D" parent="."]
+position = Vector2(240, 104)
+sprite_frames = SubResource("SpriteFrames_e5qqf")
+autoplay = "default"
+frame_progress = 0.864598

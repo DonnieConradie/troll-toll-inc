@@ -40,6 +40,7 @@ texture = ExtResource("1_2td1j")
 texture_filter = 1
 material = SubResource("ShaderMaterial_3towu")
 custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
 offset_left = 112.0
 offset_top = 40.0
 offset_right = 328.0
@@ -54,6 +55,7 @@ autowrap_mode = 3
 
 [node name="AcceptButton" type="Button" parent="."]
 process_mode = 3
+layout_mode = 0
 offset_left = 147.0
 offset_top = 220.0
 offset_right = 247.0

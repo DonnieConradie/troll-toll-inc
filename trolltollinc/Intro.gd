@@ -9,42 +9,51 @@ const GoatData = preload("res://GoatData.gd")
 const DECREE_PANEL_SCENE = preload("res://decree_panel.tscn")
 
 var has_skipped = false
+var intro_finished = false
 
 func _ready():
 	skip_button.pressed.connect(on_skip_pressed)
-	transition_label.modulate.a = 0.0
 	
+	transition_label.modulate.a = 0.0
 	play_intro_sequence()
 
 func play_intro_sequence():
-	await get_tree().create_timer(3.0).timeout
-	# Fade in "DAY 1" text
-	var tween = create_tween().set_parallel()
-	tween.tween_property(transition_label, "modulate:a", 1.0, 1.0)
+	# This function's only job is to play the visuals and the audio.
+	# It no longer calls show_first_decree().
+	
+	await get_tree().create_timer(1.0).timeout
+	if has_skipped: return
+	
 	audio_player.play()
 	
+	var tween = create_tween().set_parallel()
+	tween.tween_property(transition_label, "modulate:a", 1.0, 1.0)
 	await tween.finished
 	if has_skipped: return
 	
-	# Hold
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(1.5).timeout
 	if has_skipped: return
 	
-	# Fade out "DAY 1" text
 	var tween2 = create_tween()
 	tween2.tween_property(transition_label, "modulate:a", 0.0, 1.0)
 	await tween2.finished
-	if has_skipped: return
+	# The function now ends here. The 'finished' signal will handle the next step.
 
 func on_skip_pressed():
 	if has_skipped: return
 	has_skipped = true
-	# Stop all animations and sounds and go straight to the decree
 	audio_player.stop()
-	get_tree().get_nodes_in_group("tweens").map(func(t): t.kill()) # Kills running tweens
+	
+	var tweens = get_tree().get_nodes_in_group("tweens")
+	for t in tweens:
+		t.kill()
+		
 	show_first_decree()
 
 func show_first_decree():
+	if intro_finished: return
+	intro_finished = true
+	
 	skip_button.hide()
 	transition_label.hide()
 	
@@ -59,5 +68,9 @@ func show_first_decree():
 func go_to_main_game():
 	get_tree().change_scene_to_file("res://main.tscn")
 
-func _on_audio_stream_player_finished() -> void:
+func _on_audio_stream_player_finished():
+	# This function now correctly checks if the player has already skipped.
+	if has_skipped:
+		return
+	
 	show_first_decree()

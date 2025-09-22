@@ -365,18 +365,6 @@ random_pitch = 1.1
 streams_count = 1
 stream_0/stream = ExtResource("12_xuqvo")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
-shader = ExtResource("9_2cqfq")
-shader_parameter/jiggle_amount = 0.5
-shader_parameter/jiggle_speed = 4.0
-shader_parameter/character_width_factor = 20.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4k2k6"]
-shader = ExtResource("9_2cqfq")
-shader_parameter/jiggle_amount = 0.5
-shader_parameter/jiggle_speed = 5.0
-shader_parameter/character_width_factor = 25.0
-
 [sub_resource type="Shader" id="Shader_htxhm"]
 code = "// res/shaders/jiggle_text.gdshader
 shader_type canvas_item;
@@ -419,6 +407,18 @@ shader = ExtResource("9_2cqfq")
 shader_parameter/jiggle_amount = 0.2
 shader_parameter/jiggle_speed = 10.0
 shader_parameter/character_width_factor = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4k2k6"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 5.0
+shader_parameter/character_width_factor = 25.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 4.0
+shader_parameter/character_width_factor = 20.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ok6jj"]
 
@@ -618,7 +618,94 @@ stream = SubResource("AudioStreamRandomizer_facbu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Violations" type="Label" parent="CanvasLayer"]
+[node name="MainGameUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainGameUI"]
+offset_left = 48.0
+offset_right = 480.0
+offset_bottom = 44.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MainGameUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 197
+
+[node name="StrikesContainer" type="HBoxContainer" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Strike3" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer"]
+material = SubResource("ShaderMaterial_jq2sk")
+layout_mode = 2
+texture = ExtResource("17_0rl1p")
+stretch_mode = 2
+
+[node name="Strike2" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer"]
+material = SubResource("ShaderMaterial_jq2sk")
+layout_mode = 2
+texture = ExtResource("16_4k2k6")
+stretch_mode = 2
+
+[node name="Strike1" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer"]
+material = SubResource("ShaderMaterial_jq2sk")
+layout_mode = 2
+texture = ExtResource("15_jq2sk")
+stretch_mode = 2
+
+[node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="GoldLabel" type="Label" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_074og")
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.483995, 0.647695, 0.743417, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 27
+text = "100"
+horizontal_alignment = 2
+
+[node name="GoldIcon" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/VBoxContainer"]
+material = SubResource("ShaderMaterial_cegan")
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("7_efxa6")
+stretch_mode = 2
+
+[node name="DayTitleLabel" type="Label" parent="CanvasLayer/MainGameUI"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_4k2k6")
+offset_left = 128.0
+offset_top = 8.0
+offset_right = 352.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_outline_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 20
+text = "DAY 1 - Mandatory Appetizer"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Violations" type="Label" parent="CanvasLayer/MainGameUI"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_htxhm")
 custom_minimum_size = Vector2(50, 0)
@@ -638,91 +725,23 @@ vertical_alignment = 2
 autowrap_mode = 3
 uppercase = true
 
-[node name="DayTitleLabel" type="Label" parent="CanvasLayer"]
-texture_filter = 1
-material = SubResource("ShaderMaterial_4k2k6")
-offset_left = 128.0
-offset_top = 8.0
-offset_right = 352.0
-offset_bottom = 51.0
-theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
-theme_override_colors/font_outline_color = Color(0.223529, 0.168627, 0.207843, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/outline_size = 2
-theme_override_constants/shadow_outline_size = 2
+[node name="ViewMandateButton" type="Button" parent="CanvasLayer/MainGameUI"]
+offset_left = 200.0
+offset_top = 247.0
+offset_right = 280.0
+offset_bottom = 259.0
 theme_override_fonts/font = ExtResource("8_dg77c")
-theme_override_font_sizes/font_size = 20
-text = "DAY 1 - Mandatory Appetizer"
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-offset_left = 48.0
-offset_right = 480.0
-offset_bottom = 44.0
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 197
-
-[node name="StrikesContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Strike3" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/StrikesContainer"]
-material = SubResource("ShaderMaterial_jq2sk")
-layout_mode = 2
-texture = ExtResource("17_0rl1p")
-stretch_mode = 2
-
-[node name="Strike2" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/StrikesContainer"]
-material = SubResource("ShaderMaterial_jq2sk")
-layout_mode = 2
-texture = ExtResource("16_4k2k6")
-stretch_mode = 2
-
-[node name="Strike1" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/StrikesContainer"]
-material = SubResource("ShaderMaterial_jq2sk")
-layout_mode = 2
-texture = ExtResource("15_jq2sk")
-stretch_mode = 2
-
-[node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-theme_override_constants/separation = 3
-
-[node name="GoldLabel" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
-texture_filter = 1
-material = SubResource("ShaderMaterial_074og")
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
-theme_override_colors/font_shadow_color = Color(0.483995, 0.647695, 0.743417, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 2
-theme_override_fonts/font = ExtResource("8_dg77c")
-theme_override_font_sizes/font_size = 27
-text = "100"
-horizontal_alignment = 2
-
-[node name="GoldIcon" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
-material = SubResource("ShaderMaterial_cegan")
-layout_mode = 2
-size_flags_vertical = 4
-texture = ExtResource("7_efxa6")
-stretch_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
+text = "View Mandate"
 
 [node name="EatButton" type="Button" parent="CanvasLayer"]
-offset_left = 172.0
+offset_left = 151.0
 offset_top = 148.0
-offset_right = 228.0
+offset_right = 215.0
 offset_bottom = 160.0
 theme_override_fonts/font = ExtResource("8_dg77c")
 theme_override_font_sizes/font_size = 11
@@ -758,9 +777,9 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_htxhm")
 text = "GRAB"
 
 [node name="PassButton" type="Button" parent="CanvasLayer"]
-offset_left = 253.0
+offset_left = 265.0
 offset_top = 148.0
-offset_right = 309.0
+offset_right = 329.0
 offset_bottom = 160.0
 theme_override_fonts/font = ExtResource("8_dg77c")
 theme_override_font_sizes/font_size = 11
@@ -771,9 +790,9 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
 text = "PASS"
 
 [node name="InspectButton" type="Button" parent="CanvasLayer"]
-offset_left = 172.0
+offset_left = 151.0
 offset_top = 148.0
-offset_right = 228.0
+offset_right = 215.0
 offset_bottom = 160.0
 theme_override_fonts/font = ExtResource("8_dg77c")
 theme_override_font_sizes/font_size = 11
@@ -849,19 +868,6 @@ autowrap_mode = 3
 [node name="ColourPalette-Retrotronic-8x" type="Sprite2D" parent="CanvasLayer/DialogueContainer"]
 position = Vector2(184, 192)
 texture = ExtResource("15_vivmo")
-
-[node name="ViewMandateButton" type="Button" parent="CanvasLayer"]
-offset_left = 200.0
-offset_top = 247.0
-offset_right = 280.0
-offset_bottom = 259.0
-theme_override_fonts/font = ExtResource("8_dg77c")
-theme_override_font_sizes/font_size = 11
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
-text = "View Mandate"
 
 [node name="FaxMachinetable" type="Sprite2D" parent="."]
 position = Vector2(130, 217)
