@@ -31,6 +31,7 @@ func action_peek():
 func action_eat():
 	if current_target:
 		play("eat")
+		position = Vector2(207, 154)
 		current_target.queue_free()
 
 func action_pass():
@@ -55,6 +56,7 @@ func _on_animation_finished():
 	elif animation == "drop":
 		play("idle")
 	elif animation == "eat":
+		position = Vector2(240, 182.5)
 		start_drop_sequence()
 
 func _on_frame_changed():

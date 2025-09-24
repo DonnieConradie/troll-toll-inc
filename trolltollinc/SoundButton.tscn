@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://evtjbilf8iog"]
+
+[ext_resource type="Script" uid="uid://d0qx51pc5jqd1" path="res://SoundButton.gd" id="1_mu2p4"]
+
+[node name="SoundButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_mu2p4")

@@ -1,7 +1,6 @@
 # Main.gd
 extends Node2D
 
-
 @onready var top_world_material = $TopWorld.material
 @onready var spawn_point_left: Marker2D = $TopWorld/SpawnPointLeft
 @onready var bridge_point: Marker2D = $TopWorld/BridgePoint
@@ -9,17 +8,24 @@ extends Node2D
 @onready var troll = $Troll
 @onready var strikes_container = $CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer
 @onready var day_title_label = $CanvasLayer/MainGameUI/DayTitleLabel
-@onready var view_mandate_button = $CanvasLayer/MainGameUI/ViewMandateButton
-@onready var inspect_button = $CanvasLayer/InspectButton
-@onready var eat_button = $CanvasLayer/EatButton
-@onready var pass_button = $CanvasLayer/PassButton
-@onready var censored_label = $CanvasLayer/CensoredLabel
+@onready var view_mandate_button: Button = $CanvasLayer/MainGameUI/ViewMandateButton
+@onready var eat_button: Button = $CanvasLayer/MainGameUI/EatButton
+@onready var pass_button: Button = $CanvasLayer/MainGameUI/PassButton
+@onready var inspect_button: Button = $CanvasLayer/MainGameUI/InspectButton
+@onready var censored_label = $CanvasLayer/MainGameUI/CensoredLabel
 @onready var dialogue_trigger_point = $DialogueTriggerPoint
-@onready var troll_dialogue_bubble = $CanvasLayer/TrollDialogueBubble
+@onready var troll_dialogue_bubble = $CanvasLayer/MainGameUI/TrollDialogueBubble
+@onready var dialogue_bubble = $CanvasLayer/MainGameUI/DialogueContainer/DialogueBubble
 @onready var fax_machine = $FaxMachine
-@onready var grab_paper_button = $CanvasLayer/GrabPaperButton
+@onready var grab_paper_button = $CanvasLayer/MainGameUI/GrabPaperButton
 @onready var ambience: AudioStreamPlayer = $Ambience
 @onready var main_game_ui = $CanvasLayer/MainGameUI
+@onready var hover: AudioStreamPlayer = $Sound/Hover
+@onready var click: AudioStreamPlayer = $Sound/Click
+@onready var bite: AudioStreamPlayer = $Sound/Bite
+@onready var pause_menu: Control = $"CanvasLayer/Pause menu"
+@onready var gold_label: Label = $CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/VBoxContainer/GoldLabel
+
 
 const DECREE_PANEL_SCENE = preload("res://decree_panel.tscn")
 const GoatData = preload("res://GoatData.gd")
@@ -29,19 +35,31 @@ var strikes_remaining = 3
 var current_goat_data: Dictionary
 var current_day = 1
 var day_goat_index = 0
+var gold = 0 
 
 enum GameState { NONE, DIALOGUE, WAITING_FOR_INSPECT, WAITING_FOR_DECISION, PAUSED }
 var current_state = GameState.NONE
+var pre_pause_state = GameState.NONE
 
 var troll_questions = [ "Who goes there?!", "What's the password?", "State your business!", "You dare cross my bridge?", "Halt! Who goes trip-trapping over my bridge?" ]
+var troll_reminder_lines = [
+	"Right, new day. Don't forget about those endangered one-horned goats...",
+	"Another day, another decree. Remember the one-horn rule, management is watching.",
+	"Okay, focus. That one-horn policy is still in effect. No inspections."
+]
 
 func _ready():
 	ambience.play()
+	SoundManager.play_game_music()
+	
 	inspect_button.pressed.connect(on_inspect_button_pressed)
 	eat_button.pressed.connect(on_eat_button_pressed)
 	pass_button.pressed.connect(on_pass_button_pressed)
 	troll.is_dropping.connect(on_troll_is_dropping)
 	view_mandate_button.pressed.connect(on_view_mandate_pressed)
+	
+	update_strikes_ui()
+	update_gold_ui()
 	
 	censored_label.hide()
 	troll_dialogue_bubble.hide()
@@ -57,6 +75,15 @@ func on_troll_is_dropping(duration: float):
 	if target:
 		target.set_silhouette(true)
 
+func update_ui_state():
+	match current_state:
+		GameState.WAITING_FOR_INSPECT:
+			set_button_visibility(true, false, true)
+		GameState.WAITING_FOR_DECISION:
+			set_button_visibility(false, true, true)
+		_: # This default case covers NONE, DIALOGUE, and PAUSED states.
+			set_button_visibility(false, false, false)
+
 func set_button_visibility(inspect: bool, eat: bool, pass_btn: bool):
 	inspect_button.visible = inspect
 	eat_button.visible = eat
@@ -66,6 +93,9 @@ func update_strikes_ui():
 	var strike_icons = strikes_container.get_children()
 	for i in range(strike_icons.size()):
 		strike_icons[i].visible = (i < strikes_remaining)
+
+func update_gold_ui():
+	gold_label.text = "R" + str(gold)
 
 func spawn_character():
 	var current_day_goats = GoatData.DAYS_DATA.get(current_day, [])
@@ -78,26 +108,41 @@ func spawn_character():
 
 	var new_goer = BRIDGE_GOER_SCENE.instantiate()
 	add_child(new_goer)
+	if current_day == 7:
+		new_goer.wait_duration = 8.0
 	new_goer.initialize(current_goat_data, spawn_point_left.position, dialogue_trigger_point.position, bridge_point.position)
 	new_goer.action_complete.connect(on_goat_action_complete)
 	new_goer.dialogue_trigger_reached.connect(on_goat_reaches_trigger)
 	new_goer.final_position_reached.connect(on_goat_reaches_bridge)
 	new_goer.timer_ran_out.connect(on_goat_timer_ran_out)
+	new_goer.wants_to_speak.connect(on_goat_wants_to_speak)
 	troll.set_target(new_goer)
 
 	current_state = GameState.DIALOGUE
 	set_button_visibility(false, false, false)
 
+func on_goat_wants_to_speak(text: String):
+	var target = troll.get_target()
+	if !target: return
+	dialogue_bubble.global_position = target.global_position + Vector2(0, -50)
+	dialogue_bubble.text = text
+	dialogue_bubble.show()
+	get_tree().create_timer(3.0).timeout.connect(func(): 
+		if dialogue_bubble: 
+			dialogue_bubble.hide()
+	)
+
 func handle_mistake(reason: String):
-	if current_state == GameState.PAUSED: return
-	current_state = GameState.PAUSED
+	await get_tree().create_timer(1.0).timeout
+	if get_tree().paused: return
+	
+	set_button_visibility(false, false, false)
 	get_tree().paused = true
 	main_game_ui.hide()
 	
 	strikes_remaining -= 1
 	update_strikes_ui()
 	SoundManager.play("crunch")
-	set_button_visibility(false, false, false)
 	
 	var target = troll.get_target()
 	if target:
@@ -114,18 +159,82 @@ func handle_mistake(reason: String):
 		get_tree().paused = false
 		main_game_ui.show()
 		if strikes_remaining <= 0:
-			get_tree().change_scene_to_file("res://EndScreen.tscn")
+			SoundManager.stop_all_music()
+			get_tree().change_scene_to_file("res://end_screen.tscn")
 		else:
+			# --- THIS IS THE KEY CHANGE ---
+			# Only depart the goat if it still exists.
+			# If the mistake was an illegal eat, the target will be null here.
 			if target:
 				target.depart(true)
+			else:
+				# If the target is null (because we ate it), we still need to
+				# trigger the cooldown for the next goat to spawn.
+				on_goat_action_complete()
+
 			current_state = GameState.NONE
+			re_evaluate_ui_state()
 	)
 
+func on_eat_button_pressed():
+	if current_state != GameState.WAITING_FOR_DECISION: return
+	
+	# --- THIS IS THE NEW LOGIC ---
+	# Your sound plays, and we immediately perform the visual action.
+	bite.play()
+	censored_label.show()
+	get_tree().create_timer(0.5).timeout.connect(func(): censored_label.hide())
+	troll.action_eat() # This will queue_free the goat
+	
+	# We hide the buttons immediately as the action is taken.
+	set_button_visibility(false, false, false)
+	
+	# We wait for the troll's animation to finish before checking the rules.
+	await troll.animation_finished
+	
+	if current_goat_data["correct_action"] == "EAT":
+		# The decision was correct. The goat is already gone.
+		# We just need to start the cooldown for the next goat.
+		on_goat_action_complete()
+	else:
+		var reason = current_goat_data.get("failure_reason", "This goat should have been PASSED.")
+		handle_mistake(reason)
+
+func on_pass_button_pressed():
+	var target = troll.get_target()
+	if !target or current_state == GameState.PAUSED: return
+
+	# --- THIS IS THE NEW LOGIC ---
+	var was_inspected = (current_state == GameState.WAITING_FOR_DECISION)
+	
+	if was_inspected:
+		# Only award gold if the goat was inspected
+		gold += 10
+		update_gold_ui() # A new, targeted function for clarity
+		SoundManager.play("cha_ching")
+	else:
+		# If not inspected, just play a simple click sound
+		SoundManager.play("ui_click")
+
+	var is_correct = (current_goat_data["correct_action"] == "PASS")
+	
+	if is_correct:
+		target.depart(true)
+		troll.action_pass()
+		current_state = GameState.NONE
+		set_button_visibility(false, false, false)
+	else:
+		if was_inspected:
+			var reason = current_goat_data.get("failure_reason", "This goat should have been EATEN.")
+			handle_mistake(reason)
+
 func on_view_mandate_pressed():
-	if current_state == GameState.PAUSED or current_state == GameState.NONE: return
-	main_game_ui.hide()
-	current_state = GameState.PAUSED
+	# We no longer check the state here. We just check if a panel is already open.
+	if get_tree().paused: return
+		
 	get_tree().paused = true
+	main_game_ui.hide()
+	set_button_visibility(false, false, false)
 	
 	var decree_panel = DECREE_PANEL_SCENE.instantiate()
 	decree_panel.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -138,19 +247,32 @@ func on_view_mandate_pressed():
 	decree_panel.mandate_accepted.connect(func():
 		get_tree().paused = false
 		main_game_ui.show()
-		if troll.get_target():
-			if troll.animation == "peek":
-				current_state = GameState.WAITING_FOR_DECISION
-			else:
-				current_state = GameState.WAITING_FOR_INSPECT
-		else:
-			current_state = GameState.NONE
+		# When the panel closes, re-evaluate everything.
+		re_evaluate_ui_state()
 	)
+
+
+func re_evaluate_ui_state():
+	var target = troll.get_target()
+	
+	# Rule 1: Is there a goat on the bridge AND is it in the WAITING state?
+	if !target or target.current_state != BridgeGoer.State.WAITING:
+		# If there is no goat, OR the goat is not idling, show nothing.
+		current_state = GameState.NONE
+		set_button_visibility(false, false, false)
+		return
+
+	# Rule 2: If there is an idling goat, what is the troll's state?
+	if troll.animation == "peek":
+		current_state = GameState.WAITING_FOR_DECISION
+		set_button_visibility(false, true, true)
+	else:
+		current_state = GameState.WAITING_FOR_INSPECT
+		set_button_visibility(true, false, true)
 
 func on_goat_timer_ran_out():
 	handle_mistake("Took too long to make a decision.")
 	troll.action_pass()
-	set_button_visibility(false, false, false)
 
 func on_goat_reaches_trigger():
 	$Sound/Troll_voice.play()
@@ -165,7 +287,7 @@ func on_goat_reaches_bridge():
 	var target = troll.get_target()
 	if target:
 		var dialogue_timer = target.show_dialogue(goat_answer)
-		await dialogue_timer.timeout
+		await get_tree().create_timer(0.5).timeout
 	
 	if current_state != GameState.PAUSED:
 		current_state = GameState.WAITING_FOR_INSPECT
@@ -173,15 +295,16 @@ func on_goat_reaches_bridge():
 
 func on_goat_action_complete():
 	current_state = GameState.NONE
-	set_button_visibility(false, false, false)
-	get_tree().create_timer(3.0).timeout.connect(spawn_character)
+	re_evaluate_ui_state() 
+	get_tree().create_timer(0.5).timeout.connect(spawn_character)
 
 func on_inspect_button_pressed():
 	if current_state != GameState.WAITING_FOR_INSPECT: return
 	SoundManager.play("ui_click")
 	
 	if current_goat_data.get("special_rule") == "NO_INSPECT":
-		handle_mistake("You were instructed not to inspect this goat.")
+		var reason = current_goat_data.get("failure_reason", "This goat should not have been inspected.")
+		handle_mistake(reason)
 	else:
 		current_state = GameState.WAITING_FOR_DECISION
 		troll.action_peek()
@@ -190,36 +313,6 @@ func on_inspect_button_pressed():
 			var tween = target.reveal_and_start_timer()
 			tween.tween_property(top_world_material, "shader_parameter/silhouette_strength", 0.0, 0.3)
 		set_button_visibility(false, true, true)
-
-func on_eat_button_pressed():
-	if current_state != GameState.WAITING_FOR_DECISION: return
-	
-	if current_goat_data["correct_action"] == "EAT":
-		SoundManager.play("eat_sound")
-		censored_label.show()
-		get_tree().create_timer(0.5).timeout.connect(func(): censored_label.hide())
-		troll.action_eat()
-		on_goat_action_complete()
-	else:
-		handle_mistake("Incorrectly ate a goat.")
-
-func on_pass_button_pressed():
-	var target = troll.get_target()
-	if !target or current_state == GameState.PAUSED: return
-
-	var is_correct = (current_goat_data["correct_action"] == "PASS")
-	
-	if is_correct:
-		SoundManager.play("cha_ching")
-		target.depart(true)
-		troll.action_pass()
-		current_state = GameState.NONE
-		set_button_visibility(false, false, false)
-	else:
-		if current_state == GameState.WAITING_FOR_INSPECT:
-			handle_mistake("Incorrectly passed a goat before inspection.")
-		else:
-			handle_mistake("Incorrectly passed a goat after inspection.")
 
 func start_end_of_day_sequence():
 	current_state = GameState.NONE
@@ -241,25 +334,90 @@ func show_next_decree():
 	main_game_ui.hide()
 	current_day += 1
 	
-	if not GoatData.DAYS_DATA.has(current_day):
-		get_tree().change_scene_to_file("res://EndScreen.tscn")
-		return
+	# --- THIS IS THE NEW LOGIC ---
+	if current_day == 2:
+		# Special case for the transition to Day 2
+		var clarification_panel = DECREE_PANEL_SCENE.instantiate()
+		add_child(clarification_panel)
+		clarification_panel.show_decree(GoatData.CLARIFICATION_TEXT)
+		clarification_panel.set_accept_button_text("Understood")
+		
+		# When the clarification is accepted, THEN we show the real mandate
+		clarification_panel.mandate_accepted.connect(func():
+			var decree_panel = DECREE_PANEL_SCENE.instantiate()
+			add_child(decree_panel)
+			var next_decree_text = GoatData.DECREE_TEXTS[current_day]
+			decree_panel.show_decree(next_decree_text)
+			decree_panel.enable_drum_roll() # This one leads to a new day
+			
+			decree_panel.mandate_accepted.connect(func():
+				main_game_ui.show()
+				start_new_day()
+			)
+		)
+	else:
+		# Normal logic for all other days (Day 3, 4, 5, etc.)
+		if not GoatData.DAYS_DATA.has(current_day):
+			SoundManager.stop_all_music()
+			get_tree().change_scene_to_file("res://WinScreen.tscn")
+			return
 
-	var decree_panel = DECREE_PANEL_SCENE.instantiate()
-	add_child(decree_panel)
-	var next_decree_text = GoatData.DECREE_TEXTS[current_day]
-	decree_panel.show_decree(next_decree_text)
-	
-	decree_panel.mandate_accepted.connect(func():
-		main_game_ui.show()
-		start_new_day()
-	)
+		var decree_panel = DECREE_PANEL_SCENE.instantiate()
+		add_child(decree_panel)
+		var next_decree_text = GoatData.DECREE_TEXTS[current_day]
+		decree_panel.show_decree(next_decree_text)
+		decree_panel.enable_drum_roll()
+		
+		decree_panel.mandate_accepted.connect(func():
+			main_game_ui.show()
+			start_new_day()
+		)
 
 func start_new_day():
 	fax_machine.play("idle")
+	$Sound/Drumroll.play()
 	day_goat_index = 0
 	
 	var decree_title = GoatData.DECREE_TITLES[current_day]
 	day_title_label.text = "DAY " + str(current_day) + " - " + decree_title
 	
+	# --- THIS IS THE NEW LOGIC ---
+	# Check if it's a day where a reminder is needed.
+	if current_day == 3 or current_day == 5:
+		# Pick a random reminder and show it in the troll's bubble.
+		var reminder_text = troll_reminder_lines.pick_random()
+		troll_dialogue_bubble.text = reminder_text
+		troll_dialogue_bubble.show()
+		
+		# Wait for 4 seconds so the player has time to read it.
+		await get_tree().create_timer(4.0).timeout
+		troll_dialogue_bubble.hide()
+
+	# The rest of the function proceeds as normal.
 	spawn_character()
+
+
+func _on_mouse_entered() -> void:
+	hover.play()
+
+
+func _on_button_pressed() -> void:
+	click.play()
+
+
+func _unhandled_input(event):
+	if Input.is_action_just_pressed("ui_cancel"):
+		$Sound/bleat.play()
+		if not get_tree().paused:
+			get_tree().paused = true
+			pause_menu.show()
+
+func _on_continue_pressed() -> void:
+	get_tree().paused = false
+	pause_menu.hide()
+	$Sound/bleat.play()
+
+
+func _on_quit_pressed() -> void:
+	get_tree().paused = false # Always unpause before changing scenes
+	get_tree().change_scene_to_file("res://main_menu.tscn")

@@ -1,0 +1,245 @@
+[gd_scene load_steps=38 format=3 uid="uid://d0eaghr5ep0t0"]
+
+[ext_resource type="Script" uid="uid://cpmnq02kvblwe" path="res://EndScreen.gd" id="1_2afhe"]
+[ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="1_xu7hh"]
+[ext_resource type="FontFile" uid="uid://d0w1s1dm53moq" path="res://assets/fonts/Pixel Square 10.ttf" id="2_pmjk2"]
+[ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="3_d75mr"]
+[ext_resource type="Texture2D" uid="uid://d03bt6ojh1lri" path="res://assets/visual/sky_01.png" id="3_jpe70"]
+[ext_resource type="Texture2D" uid="uid://dv83gktlwnro0" path="res://assets/visual/animations/printer_animation.png" id="7_y1pth"]
+[ext_resource type="AudioStream" uid="uid://c5lxy4rnrxrd0" path="res://assets/sound/click.wav" id="8_3xq27"]
+[ext_resource type="AudioStream" uid="uid://bstv2kbalopfq" path="res://assets/sound/hover.wav" id="9_nmhxd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0o4t1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0k4wn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j5v2v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iotk1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w44g7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cm266"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g8g3n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nlkkf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qe12f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8qtwp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dy7ct"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2sba"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ai24q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qby1g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_04soa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u6vjd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_swr0i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2urq5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fu7sn"]
+shader = ExtResource("1_xu7hh")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 5.0
+shader_parameter/character_width_factor = 25.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jix8l"]
+shader = ExtResource("1_xu7hh")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 4.0
+shader_parameter/character_width_factor = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlkkf"]
+atlas = ExtResource("7_y1pth")
+region = Rect2(0, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qe12f"]
+atlas = ExtResource("7_y1pth")
+region = Rect2(40, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qtwp"]
+atlas = ExtResource("7_y1pth")
+region = Rect2(80, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiatc"]
+atlas = ExtResource("7_y1pth")
+region = Rect2(80, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg3m2"]
+atlas = ExtResource("7_y1pth")
+region = Rect2(40, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojb7r"]
+atlas = ExtResource("7_y1pth")
+region = Rect2(0, 0, 40, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nbj2a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nlkkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qe12f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qtwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qe12f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiatc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg3m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojb7r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0o4t1"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("8_3xq27")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dy7ct"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("9_nmhxd")
+
+[node name="EndScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2afhe")
+
+[node name="Sky01" type="Sprite2D" parent="."]
+position = Vector2(240, 136)
+texture = ExtResource("3_jpe70")
+
+[node name="RetryButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 160.0
+offset_right = 288.0
+offset_bottom = 176.0
+theme_override_colors/font_disabled_color = Color(0.623849, 0.534736, 0.459469, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.870047, 0.815807, 0.770837, 1)
+theme_override_colors/font_hover_color = Color(0.899601, 0.856677, 0.821193, 1)
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_focus_color = Color(0.906117, 0.865812, 0.832514, 1)
+theme_override_colors/font_pressed_color = Color(0.826275, 0.757588, 0.700386, 1)
+theme_override_fonts/font = ExtResource("3_d75mr")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0o4t1")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_0k4wn")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_j5v2v")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_iotk1")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_w44g7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_cm266")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_g8g3n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dy7ct")
+text = "APPLY AGAIN"
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 192.0
+offset_right = 288.0
+offset_bottom = 208.0
+theme_override_colors/font_disabled_color = Color(0.984173, 0.886327, 0.883941, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.95516, 0.680626, 0.679219, 1)
+theme_override_colors/font_hover_color = Color(0.942123, 0.607732, 0.609429, 1)
+theme_override_colors/font_outline_color = Color(0.832755, 0.349151, 0.376998, 1)
+theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_colors/font_focus_color = Color(0.577942, 0.200709, 0.229428, 1)
+theme_override_colors/font_pressed_color = Color(0.389542, 0.121499, 0.142635, 1)
+theme_override_fonts/font = ExtResource("3_d75mr")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_v2sba")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_ai24q")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qby1g")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_04soa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_u6vjd")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_swr0i")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2urq5")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dy7ct")
+text = "EXIT"
+
+[node name="TransitionLabel" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_fu7sn")
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 0
+offset_left = 48.0
+offset_top = 43.0
+offset_right = 432.0
+offset_bottom = 75.0
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_shadow_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("2_pmjk2")
+theme_override_font_sizes/font_size = 27
+text = "CONTRACT TERMINATED"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="DonnieDev" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_jix8l")
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = 96.0
+offset_top = 79.0
+offset_right = 384.0
+offset_bottom = 109.0
+theme_override_colors/font_color = Color(0.462086, 0.153531, 0.176013, 1)
+theme_override_fonts/font = ExtResource("3_d75mr")
+theme_override_font_sizes/font_size = 22
+text = "Reason: Gross Incompetence"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Printer02" type="AnimatedSprite2D" parent="."]
+position = Vector2(240, 131)
+sprite_frames = SubResource("SpriteFrames_nbj2a")
+autoplay = "default"
+frame_progress = 0.956518
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_0o4t1")
+
+[node name="Hover" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_dy7ct")
+
+[connection signal="mouse_entered" from="RetryButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="RetryButton" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="ExitButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_button_pressed"]

@@ -1,15 +1,37 @@
-[gd_scene load_steps=10 format=3 uid="uid://dvc6v1ruc6wwl"]
+[gd_scene load_steps=22 format=3 uid="uid://dvc6v1ruc6wwl"]
 
 [ext_resource type="Texture2D" uid="uid://b8h2ssmla50c3" path="res://assets/visual/ui/daily_decree_background.png" id="1_2td1j"]
 [ext_resource type="Script" uid="uid://cv6j2e5xahoh2" path="res://decree_panel.gd" id="1_xyude"]
 [ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="2_xyude"]
 [ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="3_hsp3a"]
+[ext_resource type="AudioStream" uid="uid://c5lxy4rnrxrd0" path="res://assets/sound/click.wav" id="5_3towu"]
+[ext_resource type="AudioStream" uid="uid://bstv2kbalopfq" path="res://assets/sound/hover.wav" id="6_dy4gr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyude"]
+shader = ExtResource("2_xyude")
+shader_parameter/jiggle_amount = 0.1
+shader_parameter/jiggle_speed = 4.0
+shader_parameter/character_width_factor = 15.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3towu"]
 shader = ExtResource("2_xyude")
-shader_parameter/jiggle_amount = 0.5
-shader_parameter/jiggle_speed = 4.0
-shader_parameter/character_width_factor = 20.0
+shader_parameter/jiggle_amount = 0.323
+shader_parameter/jiggle_speed = 2.655
+shader_parameter/character_width_factor = 30.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xyude"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hsp3a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_omd3v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lxbir"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7qc88"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wov8f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8bpa"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3towu"]
 
@@ -18,6 +40,16 @@ shader_parameter/character_width_factor = 20.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mjjnh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ns4i7"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mjjnh"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("5_3towu")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ns4i7"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("6_dy4gr")
 
 [node name="DecreePanel" type="Control"]
 process_mode = 3
@@ -30,6 +62,7 @@ grow_vertical = 2
 script = ExtResource("1_xyude")
 
 [node name="fax_paper_background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_xyude")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -46,7 +79,7 @@ offset_top = 40.0
 offset_right = 328.0
 offset_bottom = 207.0
 rotation = 0.0698132
-theme_override_colors/font_color = Color(0.223529, 0.168627, 0.207843, 1)
+theme_override_colors/font_color = Color(0.189853, 0.141386, 0.176013, 1)
 theme_override_fonts/font = ExtResource("3_hsp3a")
 theme_override_font_sizes/font_size = 12
 text = "I am the chosen one! I am the chosen one! I am the chosen one! I am the chose chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! I am the chosen one! "
@@ -56,24 +89,37 @@ autowrap_mode = 3
 [node name="AcceptButton" type="Button" parent="."]
 process_mode = 3
 layout_mode = 0
-offset_left = 147.0
-offset_top = 220.0
-offset_right = 247.0
-offset_bottom = 251.0
+offset_left = 109.0
+offset_top = 206.0
+offset_right = 294.0
+offset_bottom = 263.0
 rotation = 0.0383972
-theme_override_colors/font_hover_pressed_color = Color(0.282353, 0.419608, 0.498039, 1)
-theme_override_colors/font_hover_color = Color(0.282353, 0.419608, 0.498039, 1)
-theme_override_colors/icon_hover_color = Color(0.199851, 0.308495, 0.370366, 1)
-theme_override_colors/font_outline_color = Color(0.754349, 0.847098, 0.902934, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.124223, 0.202443, 0.246909, 1)
+theme_override_colors/font_hover_color = Color(0.121578, 0.19869, 0.242523, 1)
 theme_override_colors/font_color = Color(0.282353, 0.419608, 0.498039, 1)
-theme_override_colors/font_focus_color = Color(0.282353, 0.419608, 0.498039, 1)
-theme_override_constants/outline_size = 1
-theme_override_constants/line_spacing = 1
+theme_override_colors/font_focus_color = Color(0.068557, 0.123011, 0.153944, 1)
+theme_override_colors/font_pressed_color = Color(0.33261, 0.486002, 0.571091, 1)
 theme_override_fonts/font = ExtResource("3_hsp3a")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xyude")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_hsp3a")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_omd3v")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_lxbir")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_7qc88")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_wov8f")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_w8bpa")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_3towu")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_dy4gr")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mjjnh")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_ns4i7")
 text = "Sign & Accept 
 Mandate"
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_mjjnh")
+
+[node name="Hover" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_ns4i7")
+
+[connection signal="mouse_entered" from="AcceptButton" to="." method="_on_accept_button_mouse_entered"]
+[connection signal="pressed" from="AcceptButton" to="." method="_on_accept_button_pressed"]

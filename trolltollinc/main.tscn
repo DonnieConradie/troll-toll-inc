@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=3 uid="uid://c480mvl7wq6rl"]
+[gd_scene load_steps=170 format=3 uid="uid://c480mvl7wq6rl"]
 
 [ext_resource type="Script" uid="uid://gbv1yeif4hmx" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="Shader" uid="uid://bt0tug2apdnl1" path="res://assets/shaders/silhouette_shader.gdshader" id="2_2cqfq"]
@@ -11,20 +11,24 @@
 [ext_resource type="Texture2D" uid="uid://cgrtgwtoml7qv" path="res://assets/visual/animations/Troll_idle_animation.png" id="6_vivmo"]
 [ext_resource type="Texture2D" uid="uid://7k5rph158cuj" path="res://assets/visual/animations/Troll_jump_animation_02.png" id="7_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://ux3qhorbs2li" path="res://assets/visual/ui/gold_icon_small.png" id="7_efxa6"]
+[ext_resource type="Texture2D" uid="uid://wm7ou47lam74" path="res://assets/visual/animations/Troll_bite_animation_01.png" id="8_4k2k6"]
 [ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="8_dg77c"]
 [ext_resource type="Texture2D" uid="uid://wy14njarn8hv" path="res://assets/visual/animations/Troll_peek_animation.png" id="8_yaehf"]
 [ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="9_2cqfq"]
 [ext_resource type="AudioStream" uid="uid://cihwuhphuwvfv" path="res://assets/sound/Landing_02.MP3" id="12_xuqvo"]
 [ext_resource type="Texture2D" uid="uid://gvd7g3kenr4n" path="res://assets/visual/ui/warning_01.png" id="15_jq2sk"]
-[ext_resource type="Texture2D" uid="uid://co1ty75oooeq6" path="res://assets/visual/Colour palette - retrotronic-8x.png" id="15_vivmo"]
-[ext_resource type="Texture2D" uid="uid://gu8eb7tk6g2b" path="res://assets/visual/ui/warning_02.png" id="16_4k2k6"]
-[ext_resource type="Texture2D" uid="uid://bdiut2ucvgc6s" path="res://assets/visual/ui/warning_03.png" id="17_0rl1p"]
 [ext_resource type="FontFile" uid="uid://d0w1s1dm53moq" path="res://assets/fonts/Pixel Square 10.ttf" id="18_ryguw"]
 [ext_resource type="Texture2D" uid="uid://wwkb4i4nyhpw" path="res://assets/visual/printer_table.png" id="19_82xsv"]
+[ext_resource type="Script" uid="uid://bywnc4bhmewba" path="res://PauseMenu.gd" id="19_ok6jj"]
+[ext_resource type="Texture2D" uid="uid://bdn5i3orcfvi3" path="res://assets/visual/ui/music_slider_2.png" id="20_come4"]
 [ext_resource type="Texture2D" uid="uid://dv83gktlwnro0" path="res://assets/visual/animations/printer_animation.png" id="20_getpj"]
 [ext_resource type="Texture2D" uid="uid://b8slbojuq37sx" path="res://assets/visual/printer.png" id="20_ryguw"]
 [ext_resource type="Texture2D" uid="uid://dsbpgudgagnwp" path="res://assets/visual/printer_02.png" id="21_d13ii"]
+[ext_resource type="Texture2D" uid="uid://3fnr2p8rfhb5" path="res://assets/visual/ui/music_slider.png" id="21_h8e4i"]
+[ext_resource type="Texture2D" uid="uid://dn23uyoa7glrg" path="res://assets/visual/ui/slider tick.png" id="22_4lmeg"]
+[ext_resource type="AudioStream" uid="uid://bc28anuqsfqgh" path="res://assets/sound/crunch.mp3" id="23_jq2sk"]
 [ext_resource type="AudioStream" uid="uid://juwfy02jy8wf" path="res://assets/sound/printing.mp3" id="24_0odxb"]
+[ext_resource type="AudioStream" uid="uid://816tly3jo104" path="res://assets/sound/drumroll_01.MP3" id="24_0rl1p"]
 [ext_resource type="AudioStream" uid="uid://d04wk2gye2dsk" path="res://assets/sound/fax_noises.mp3" id="25_lswn8"]
 [ext_resource type="AudioStream" uid="uid://fx7ptq0hvdc" path="res://assets/sound/meh2.mp3" id="26_lswn8"]
 [ext_resource type="AudioStream" uid="uid://badyfbrosj50" path="res://assets/sound/ambience_infested.mp3" id="27_a6jrf"]
@@ -32,6 +36,8 @@
 [ext_resource type="AudioStream" uid="uid://b6j6b4hko68nx" path="res://assets/sound/troll_voice_02.MP3" id="28_jq2sk"]
 [ext_resource type="AudioStream" uid="uid://jxoldurkm2g5" path="res://assets/sound/troll_voice_03.MP3" id="29_4k2k6"]
 [ext_resource type="AudioStream" uid="uid://djrpdsaewb1vt" path="res://assets/sound/troll_voice_04.MP3" id="30_0rl1p"]
+[ext_resource type="AudioStream" uid="uid://bstv2kbalopfq" path="res://assets/sound/hover.wav" id="30_htxhm"]
+[ext_resource type="AudioStream" uid="uid://c5lxy4rnrxrd0" path="res://assets/sound/click.wav" id="31_jq2sk"]
 [ext_resource type="AudioStream" uid="uid://bxu1e0o05ev20" path="res://assets/sound/troll_voice_05.MP3" id="31_ok6jj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
@@ -57,6 +63,22 @@ region = Rect2(96, 96, 96, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ryguw"]
 atlas = ExtResource("5_w48qg")
 region = Rect2(0, 192, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyx1q"]
+atlas = ExtResource("8_4k2k6")
+region = Rect2(0, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dhbp"]
+atlas = ExtResource("8_4k2k6")
+region = Rect2(128, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jx0wj"]
+atlas = ExtResource("8_4k2k6")
+region = Rect2(0, 96, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkkcx"]
+atlas = ExtResource("8_4k2k6")
+region = Rect2(128, 96, 128, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d13ii"]
 atlas = ExtResource("6_vivmo")
@@ -228,8 +250,20 @@ animations = [{
 "name": &"drop",
 "speed": 8.0
 }, {
-"frames": [],
-"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cyx1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dhbp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jx0wj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kkkcx")
+}],
+"loop": false,
 "name": &"eat",
 "speed": 8.0
 }, {
@@ -365,6 +399,14 @@ random_pitch = 1.1
 streams_count = 1
 stream_0/stream = ExtResource("12_xuqvo")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uatky"]
+
+[sub_resource type="Theme" id="Theme_kq58d"]
+TooltipLabel/colors/font_color = Color(0.223529, 0.168627, 0.207843, 1)
+TooltipLabel/font_sizes/font_size = 8
+TooltipLabel/fonts/font = ExtResource("8_dg77c")
+TooltipPanel/styles/panel = SubResource("StyleBoxEmpty_uatky")
+
 [sub_resource type="Shader" id="Shader_htxhm"]
 code = "// res/shaders/jiggle_text.gdshader
 shader_type canvas_item;
@@ -420,6 +462,20 @@ shader_parameter/jiggle_amount = 0.5
 shader_parameter/jiggle_speed = 4.0
 shader_parameter/character_width_factor = 20.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gngh3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0n3wm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qnost"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnkbs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f6a44"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0cbny"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrvbo"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ok6jj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
@@ -427,6 +483,22 @@ shader_parameter/character_width_factor = 20.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1qrp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_come4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uypp3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_blkrb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_abqjc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6iyjs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4w656"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e71vb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rnkwl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ntx8l"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d13ii"]
 
@@ -448,17 +520,82 @@ shader_parameter/character_width_factor = 20.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_htxhm"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jq2sk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4k2k6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0rl1p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h8e4i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4lmeg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0cp0l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2t1y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vke2r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uit24"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ruth0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rm4vd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pjyto"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sm6fg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b17eg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
+shader = ExtResource("9_2cqfq")
+shader_parameter/jiggle_amount = 0.974
+shader_parameter/jiggle_speed = 17.869
+shader_parameter/character_width_factor = 49.837
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ryguw"]
 shader = ExtResource("9_2cqfq")
 shader_parameter/jiggle_amount = 1.5
 shader_parameter/jiggle_speed = 10.0
 shader_parameter/character_width_factor = 15.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
-shader = ExtResource("9_2cqfq")
-shader_parameter/jiggle_amount = 0.853
-shader_parameter/jiggle_speed = 15.902
-shader_parameter/character_width_factor = 23.607
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rqtf5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1vm84"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wu3dr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cyx1q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0dhbp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jx0wj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kkkcx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_34ol3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c2n8d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wy5fy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gx4rg"]
+
+[sub_resource type="Theme" id="Theme_0cp0l"]
+HSlider/icons/grabber = ExtResource("20_come4")
+HSlider/icons/grabber_highlight = ExtResource("21_h8e4i")
+HSlider/icons/tick = ExtResource("22_4lmeg")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2t1y"]
+bg_color = Color(0.223529, 0.168627, 0.207843, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.223529, 0.168627, 0.207843, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wu3dr"]
 atlas = ExtResource("21_d13ii")
@@ -562,6 +699,16 @@ stream_2/stream = ExtResource("29_4k2k6")
 stream_3/stream = ExtResource("30_0rl1p")
 stream_4/stream = ExtResource("31_ok6jj")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_htxhm"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("30_htxhm")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4k2k6"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("31_jq2sk")
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lquwl")
 
@@ -610,7 +757,9 @@ texture = ExtResource("3_1bvp3")
 texture_filter = 1
 position = Vector2(240, 182.5)
 sprite_frames = SubResource("SpriteFrames_ruth0")
-animation = &"drop"
+animation = &"eat"
+frame = 3
+frame_progress = 1.0
 script = ExtResource("6_7mycd")
 
 [node name="SoundPlayer" type="AudioStreamPlayer" parent="Troll"]
@@ -623,8 +772,10 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = SubResource("Theme_kq58d")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainGameUI"]
+layout_mode = 0
 offset_left = 48.0
 offset_right = 480.0
 offset_bottom = 44.0
@@ -635,26 +786,31 @@ theme_override_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MainGameUI/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 197
+theme_override_constants/separation = 198
 
 [node name="StrikesContainer" type="HBoxContainer" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "When you make a mistake, you lose a life"
+tooltip_auto_translate_mode = 1
 
-[node name="Strike3" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer"]
+[node name="Strike1" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer"]
 material = SubResource("ShaderMaterial_jq2sk")
 layout_mode = 2
-texture = ExtResource("17_0rl1p")
+tooltip_text = "When you make a mistake, you lose a life"
+texture = ExtResource("15_jq2sk")
 stretch_mode = 2
 
 [node name="Strike2" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer"]
 material = SubResource("ShaderMaterial_jq2sk")
 layout_mode = 2
-texture = ExtResource("16_4k2k6")
+tooltip_text = "When you make a mistake, you lose a life"
+texture = ExtResource("15_jq2sk")
 stretch_mode = 2
 
-[node name="Strike1" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer"]
+[node name="Strike3" type="TextureRect" parent="CanvasLayer/MainGameUI/MarginContainer/HBoxContainer/StrikesContainer"]
 material = SubResource("ShaderMaterial_jq2sk")
 layout_mode = 2
+tooltip_text = "When you make a mistake, you lose a life"
 texture = ExtResource("15_jq2sk")
 stretch_mode = 2
 
@@ -668,6 +824,7 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_074og")
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
+tooltip_text = "Toll for Troll's oldest son to go to college"
 theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
 theme_override_colors/font_shadow_color = Color(0.483995, 0.647695, 0.743417, 1)
 theme_override_constants/shadow_offset_x = 2
@@ -683,24 +840,22 @@ horizontal_alignment = 2
 material = SubResource("ShaderMaterial_cegan")
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "a Coin"
 texture = ExtResource("7_efxa6")
 stretch_mode = 2
 
 [node name="DayTitleLabel" type="Label" parent="CanvasLayer/MainGameUI"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_4k2k6")
+layout_mode = 0
 offset_left = 128.0
 offset_top = 8.0
 offset_right = 352.0
 offset_bottom = 51.0
 theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
 theme_override_colors/font_outline_color = Color(0.223529, 0.168627, 0.207843, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/outline_size = 2
-theme_override_constants/shadow_outline_size = 2
 theme_override_fonts/font = ExtResource("8_dg77c")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 16
 text = "DAY 1 - Mandatory Appetizer"
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -709,6 +864,7 @@ autowrap_mode = 3
 texture_filter = 1
 material = SubResource("ShaderMaterial_htxhm")
 custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
 offset_left = 4.0
 offset_top = 7.0
 offset_right = 54.0
@@ -726,44 +882,79 @@ autowrap_mode = 3
 uppercase = true
 
 [node name="ViewMandateButton" type="Button" parent="CanvasLayer/MainGameUI"]
-offset_left = 200.0
-offset_top = 247.0
-offset_right = 280.0
-offset_bottom = 259.0
+layout_mode = 0
+offset_left = 208.0
+offset_top = 148.0
+offset_right = 272.0
+offset_bottom = 160.0
+theme_override_colors/font_disabled_color = Color(0.278431, 0.2, 0.12549, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.444011, 0.354114, 0.418081, 1)
+theme_override_colors/font_hover_color = Color(0.147672, 0.108463, 0.136463, 1)
+theme_override_colors/font_color = Color(0.0868989, 0.0587761, 0.0798764, 1)
+theme_override_colors/font_focus_color = Color(0.130816, 0.0948173, 0.120527, 1)
+theme_override_colors/font_pressed_color = Color(0.0197378, 0.0117317, 0.0172032, 1)
 theme_override_fonts/font = ExtResource("8_dg77c")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 9
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gngh3")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_0n3wm")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qnost")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wnkbs")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_f6a44")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_0cbny")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hrvbo")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
 text = "View Mandate"
 
-[node name="EatButton" type="Button" parent="CanvasLayer"]
-offset_left = 151.0
+[node name="EatButton" type="Button" parent="CanvasLayer/MainGameUI"]
+process_mode = 3
+visible = false
+layout_mode = 0
+offset_left = 153.0
 offset_top = 148.0
-offset_right = 215.0
-offset_bottom = 160.0
+offset_right = 203.0
+offset_bottom = 161.0
+theme_override_colors/font_disabled_color = Color(0.278431, 0.2, 0.12549, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_colors/font_hover_color = Color(0.147672, 0.108463, 0.136463, 1)
+theme_override_colors/font_color = Color(0.0868989, 0.0587761, 0.0798764, 1)
+theme_override_colors/font_focus_color = Color(0.130816, 0.0948173, 0.120527, 1)
+theme_override_colors/font_pressed_color = Color(0.0197378, 0.0117317, 0.0172032, 1)
 theme_override_fonts/font = ExtResource("8_dg77c")
 theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_uypp3")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_blkrb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abqjc")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_6iyjs")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_4w656")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_e71vb")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_rnkwl")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
 text = "EAT"
 
-[node name="GrabPaperButton" type="Button" parent="CanvasLayer"]
+[node name="GrabPaperButton" type="Button" parent="CanvasLayer/MainGameUI"]
 visible = false
+layout_mode = 0
 offset_left = 117.0
 offset_top = 175.0
 offset_right = 149.0
 offset_bottom = 195.0
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.560732, 0.193103, 0.221242, 1)
+theme_override_colors/font_hover_color = Color(0.572206, 0.198161, 0.22669, 1)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.184314, 0.137255, 0.172549, 1)
+theme_override_colors/font_focus_color = Color(0.10509, 0.0733967, 0.0971748, 1)
+theme_override_colors/font_pressed_color = Color(0.143447, 0.104857, 0.133795, 1)
 theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("18_ryguw")
 theme_override_font_sizes/font_size = 8
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ntx8l")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_d13ii")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_1u8w0")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0odxb")
@@ -776,37 +967,89 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_seu75")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_htxhm")
 text = "GRAB"
 
-[node name="PassButton" type="Button" parent="CanvasLayer"]
-offset_left = 265.0
-offset_top = 148.0
-offset_right = 329.0
-offset_bottom = 160.0
+[node name="PassButton" type="Button" parent="CanvasLayer/MainGameUI"]
+process_mode = 3
+layout_mode = 0
+offset_left = 279.0
+offset_top = 146.0
+offset_right = 325.0
+offset_bottom = 163.0
+theme_override_colors/font_disabled_color = Color(0.278431, 0.2, 0.12549, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.616895, 0.513334, 0.58651, 1)
+theme_override_colors/font_hover_color = Color(0.147672, 0.108463, 0.136463, 1)
+theme_override_colors/font_color = Color(0.0868989, 0.0587761, 0.0798764, 1)
+theme_override_colors/font_focus_color = Color(0.130816, 0.0948173, 0.120527, 1)
+theme_override_colors/font_pressed_color = Color(0.0197378, 0.0117317, 0.0172032, 1)
 theme_override_fonts/font = ExtResource("8_dg77c")
 theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jq2sk")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_4k2k6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_0rl1p")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h8e4i")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_4lmeg")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_0cp0l")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_d2t1y")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
 text = "PASS"
 
-[node name="InspectButton" type="Button" parent="CanvasLayer"]
-offset_left = 151.0
-offset_top = 148.0
-offset_right = 215.0
-offset_bottom = 160.0
+[node name="InspectButton" type="Button" parent="CanvasLayer/MainGameUI"]
+process_mode = 3
+layout_mode = 0
+offset_left = 153.0
+offset_top = 146.0
+offset_right = 203.0
+offset_bottom = 163.0
+theme_override_colors/font_disabled_color = Color(0.278431, 0.2, 0.12549, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.55186, 0.450633, 0.522404, 1)
+theme_override_colors/font_hover_color = Color(0.147672, 0.108463, 0.136463, 1)
+theme_override_colors/font_color = Color(0.0868989, 0.0587761, 0.0798764, 1)
+theme_override_colors/font_focus_color = Color(0.130816, 0.0948173, 0.120527, 1)
+theme_override_colors/font_pressed_color = Color(0.0197378, 0.0117317, 0.0172032, 1)
 theme_override_fonts/font = ExtResource("8_dg77c")
 theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vke2r")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_uit24")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ruth0")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rm4vd")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_pjyto")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_sm6fg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_b17eg")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ok6jj")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_facbu")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_b1qrp")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_come4")
 text = "INSPECT"
 
-[node name="CensoredLabel" type="Label" parent="CanvasLayer"]
+[node name="TrollDialogueBubble" type="Label" parent="CanvasLayer/MainGameUI"]
+process_mode = 3
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_yaehf")
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_left = 168.0
+offset_top = 93.0
+offset_right = 311.0
+offset_bottom = 141.0
+theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 16
+text = "Who goes there!? "
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="CensoredLabel" type="Label" parent="CanvasLayer/MainGameUI"]
+process_mode = 3
 visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_ryguw")
 custom_minimum_size = Vector2(128, 0)
+layout_mode = 0
 offset_left = 160.0
 offset_top = 104.0
 offset_right = 320.0
@@ -823,30 +1066,10 @@ text = "CENSORED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TrollDialogueBubble" type="Label" parent="CanvasLayer"]
-visible = false
-texture_filter = 1
-material = SubResource("ShaderMaterial_yaehf")
-custom_minimum_size = Vector2(32, 0)
-offset_left = 168.0
-offset_top = 93.0
-offset_right = 311.0
-offset_bottom = 141.0
-theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
-theme_override_colors/font_outline_color = Color(0.298039, 0.0862745, 0.101961, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("8_dg77c")
-theme_override_font_sizes/font_size = 16
-text = "Who goes there!? "
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-uppercase = true
-
-[node name="DialogueContainer" type="Node2D" parent="CanvasLayer"]
+[node name="DialogueContainer" type="Node2D" parent="CanvasLayer/MainGameUI"]
 position = Vector2(240, 104)
 
-[node name="DialogueBubble" type="Label" parent="CanvasLayer/DialogueContainer"]
+[node name="DialogueBubble" type="Label" parent="CanvasLayer/MainGameUI/DialogueContainer"]
 visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_htxhm")
@@ -865,9 +1088,106 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 3
 
-[node name="ColourPalette-Retrotronic-8x" type="Sprite2D" parent="CanvasLayer/DialogueContainer"]
-position = Vector2(184, 192)
-texture = ExtResource("15_vivmo")
+[node name="Pause menu" type="Control" parent="CanvasLayer"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("19_ok6jj")
+
+[node name="ExitButton" type="Button" parent="CanvasLayer/Pause menu"]
+process_mode = 3
+z_index = 110
+layout_mode = 0
+offset_left = 219.0
+offset_top = 76.0
+offset_right = 315.0
+offset_bottom = 92.0
+theme_override_colors/font_disabled_color = Color(0.984173, 0.886327, 0.883941, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.95516, 0.680626, 0.679219, 1)
+theme_override_colors/font_hover_color = Color(0.942123, 0.607732, 0.609429, 1)
+theme_override_colors/font_outline_color = Color(0.832755, 0.349151, 0.376998, 1)
+theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_colors/font_focus_color = Color(0.577942, 0.200709, 0.229428, 1)
+theme_override_colors/font_pressed_color = Color(0.389542, 0.121499, 0.142635, 1)
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rqtf5")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_1vm84")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_wu3dr")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_cyx1q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_0dhbp")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_jx0wj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kkkcx")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_34ol3")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_c2n8d")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_wy5fy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gx4rg")
+text = "QUIT"
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/Pause menu"]
+process_mode = 3
+z_index = 110
+layout_mode = 0
+offset_left = 219.0
+offset_top = 47.0
+offset_right = 315.0
+offset_bottom = 63.0
+theme_override_colors/font_disabled_color = Color(0.406257, 0.337135, 0.278409, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.906117, 0.865812, 0.832514, 1)
+theme_override_colors/font_hover_color = Color(0.883237, 0.833921, 0.793087, 1)
+theme_override_colors/font_outline_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_focus_color = Color(0.957923, 0.939479, 0.924316, 1)
+theme_override_colors/font_pressed_color = Color(0.716427, 0.628359, 0.55434, 1)
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rqtf5")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_1vm84")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_wu3dr")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_cyx1q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_0dhbp")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_jx0wj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kkkcx")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_34ol3")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_c2n8d")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_wy5fy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gx4rg")
+text = "CONTINUE"
+
+[node name="MusicVolumeLabel" type="Label" parent="CanvasLayer/Pause menu"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_htxhm")
+layout_mode = 0
+offset_left = 237.0
+offset_top = 64.0
+offset_right = 263.0
+offset_bottom = 74.0
+theme_override_colors/font_color = Color(0.478431, 0.611765, 0.588235, 1)
+theme_override_colors/font_outline_color = Color(0.299145, 0.0851481, 0.102133, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("8_dg77c")
+theme_override_font_sizes/font_size = 9
+text = "MUSIC"
+horizontal_alignment = 2
+vertical_alignment = 2
+autowrap_mode = 3
+uppercase = true
+
+[node name="MusicVolumeSlider" type="HSlider" parent="CanvasLayer/Pause menu"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 265.0
+offset_top = 61.0
+offset_right = 291.0
+offset_bottom = 77.0
+theme = SubResource("Theme_0cp0l")
+theme_override_styles/slider = SubResource("StyleBoxFlat_d2t1y")
+min_value = -30.0
+max_value = 0.0
+value = -15.0
 
 [node name="FaxMachinetable" type="Sprite2D" parent="."]
 position = Vector2(130, 217)
@@ -884,15 +1204,30 @@ autoplay = "idle"
 [node name="Printing" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("24_0odxb")
 
+[node name="Drumroll" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("24_0rl1p")
+
+[node name="Bite" type="AudioStreamPlayer" parent="Sound"]
+process_mode = 3
+stream = ExtResource("23_jq2sk")
+volume_db = 15.0
+
 [node name="Fax_noise" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("25_lswn8")
 
 [node name="bleat" type="AudioStreamPlayer" parent="Sound"]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_a6jrf")
-volume_db = -15.0
+volume_db = -20.0
 
 [node name="Troll_voice" type="AudioStreamPlayer" parent="Sound"]
 stream = SubResource("AudioStreamRandomizer_jq2sk")
+
+[node name="Hover" type="AudioStreamPlayer" parent="Sound"]
+stream = SubResource("AudioStreamRandomizer_htxhm")
+
+[node name="Click" type="AudioStreamPlayer" parent="Sound"]
+stream = SubResource("AudioStreamRandomizer_4k2k6")
 
 [node name="Ambience" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("27_a6jrf")
@@ -900,3 +1235,15 @@ volume_db = -20.0
 
 [connection signal="animation_finished" from="Troll" to="Troll" method="_on_animation_finished"]
 [connection signal="frame_changed" from="Troll" to="Troll" method="_on_frame_changed"]
+[connection signal="mouse_entered" from="CanvasLayer/MainGameUI/ViewMandateButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/MainGameUI/ViewMandateButton" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/MainGameUI/EatButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/MainGameUI/EatButton" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/MainGameUI/GrabPaperButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/MainGameUI/GrabPaperButton" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/MainGameUI/PassButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/MainGameUI/PassButton" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/MainGameUI/InspectButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/MainGameUI/InspectButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause menu/ExitButton" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause menu/ContinueButton" to="." method="_on_continue_pressed"]

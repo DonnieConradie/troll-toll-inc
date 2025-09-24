@@ -1,0 +1,304 @@
+[gd_scene load_steps=47 format=3 uid="uid://beww0lxn4si4q"]
+
+[ext_resource type="Script" uid="uid://bpfwf1b8vcwjy" path="res://WinScreen.gd" id="1_ujsyp"]
+[ext_resource type="Texture2D" uid="uid://d03bt6ojh1lri" path="res://assets/visual/sky_01.png" id="2_vr2rx"]
+[ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="3_urab4"]
+[ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="4_4sxsc"]
+[ext_resource type="FontFile" uid="uid://d0w1s1dm53moq" path="res://assets/fonts/Pixel Square 10.ttf" id="5_f6spu"]
+[ext_resource type="Texture2D" uid="uid://dv83gktlwnro0" path="res://assets/visual/animations/printer_animation.png" id="6_7d5xy"]
+[ext_resource type="AudioStream" uid="uid://c5lxy4rnrxrd0" path="res://assets/sound/click.wav" id="7_llf8c"]
+[ext_resource type="AudioStream" uid="uid://bstv2kbalopfq" path="res://assets/sound/hover.wav" id="8_krptv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0o4t1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0k4wn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j5v2v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iotk1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w44g7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cm266"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g8g3n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nlkkf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qe12f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8qtwp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dy7ct"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2sba"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ai24q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qby1g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_04soa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u6vjd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_swr0i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2urq5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fu7sn"]
+shader = ExtResource("4_4sxsc")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 5.0
+shader_parameter/character_width_factor = 25.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jix8l"]
+shader = ExtResource("4_4sxsc")
+shader_parameter/jiggle_amount = 0.5
+shader_parameter/jiggle_speed = 4.0
+shader_parameter/character_width_factor = 20.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0o4t1"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("7_llf8c")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dy7ct"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("8_krptv")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlkkf"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(0, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qe12f"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(40, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qtwp"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(80, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dy7ct"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(0, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o4t1"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(40, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0k4wn"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(80, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5v2v"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(0, 64, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iotk1"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(40, 64, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w44g7"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(0, 64, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm266"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(80, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8g3n"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(40, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8u0te"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(0, 32, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiatc"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(80, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg3m2"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(40, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojb7r"]
+atlas = ExtResource("6_7d5xy")
+region = Rect2(0, 0, 40, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vr2rx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nlkkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qe12f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qtwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dy7ct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0o4t1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0k4wn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5v2v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iotk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w44g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm266")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8g3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8u0te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiatc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg3m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojb7r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ujsyp")
+
+[node name="Sky01" type="Sprite2D" parent="."]
+position = Vector2(240, 136)
+texture = ExtResource("2_vr2rx")
+
+[node name="MenuButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 162.0
+offset_right = 288.0
+offset_bottom = 178.0
+theme_override_colors/font_disabled_color = Color(0.623849, 0.534736, 0.459469, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.870047, 0.815807, 0.770837, 1)
+theme_override_colors/font_hover_color = Color(0.899601, 0.856677, 0.821193, 1)
+theme_override_colors/font_color = Color(0.819608, 0.74902, 0.690196, 1)
+theme_override_colors/font_focus_color = Color(0.906117, 0.865812, 0.832514, 1)
+theme_override_colors/font_pressed_color = Color(0.826275, 0.757588, 0.700386, 1)
+theme_override_fonts/font = ExtResource("3_urab4")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0o4t1")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_0k4wn")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_j5v2v")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_iotk1")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_w44g7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_cm266")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_g8g3n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dy7ct")
+text = "MAIN MENU"
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 188.0
+offset_right = 288.0
+offset_bottom = 204.0
+theme_override_colors/font_disabled_color = Color(0.984173, 0.886327, 0.883941, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.95516, 0.680626, 0.679219, 1)
+theme_override_colors/font_hover_color = Color(0.942123, 0.607732, 0.609429, 1)
+theme_override_colors/font_outline_color = Color(0.832755, 0.349151, 0.376998, 1)
+theme_override_colors/font_color = Color(0.733333, 0.278431, 0.309804, 1)
+theme_override_colors/font_focus_color = Color(0.577942, 0.200709, 0.229428, 1)
+theme_override_colors/font_pressed_color = Color(0.389542, 0.121499, 0.142635, 1)
+theme_override_fonts/font = ExtResource("3_urab4")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_v2sba")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_ai24q")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qby1g")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_04soa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_u6vjd")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_swr0i")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2urq5")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dy7ct")
+text = "EXIT"
+
+[node name="TransitionLabel" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_fu7sn")
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 0
+offset_left = 48.0
+offset_top = 43.0
+offset_right = 432.0
+offset_bottom = 75.0
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.258824, 0.352941, 0.403922, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("5_f6spu")
+theme_override_font_sizes/font_size = 27
+text = "CONTRACT EXTENDED"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="DonnieDev" type="Label" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_jix8l")
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = 80.0
+offset_top = 56.0
+offset_right = 400.0
+offset_bottom = 133.0
+theme_override_colors/font_color = Color(0.462086, 0.153531, 0.176013, 1)
+theme_override_fonts/font = ExtResource("3_urab4")
+theme_override_font_sizes/font_size = 12
+text = "Congratulations, Employee. Your probationary period is complete. A new contract with revised terms will be issued shortly. Management is... pleased."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_0o4t1")
+
+[node name="Hover" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_dy7ct")
+
+[node name="Printer02" type="AnimatedSprite2D" parent="."]
+position = Vector2(240, 136)
+sprite_frames = SubResource("SpriteFrames_vr2rx")
+autoplay = "default"
+
+[connection signal="mouse_entered" from="MenuButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="MenuButton" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="ExitButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_button_pressed"]

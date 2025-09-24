@@ -1,3 +1,4 @@
+class_name BridgeGoer
 extends CharacterBody2D
 
 signal action_complete
@@ -20,8 +21,10 @@ signal wants_to_speak(text)
 
 const WALK_SPEED = 70.0
 const DECELERATION = 3.0
+const DANGER_COLOR = Color("#bb474f")
 
-var wait_duration = 10.0
+var wait_duration = 6.0
+var initial_label_scale: Vector2
 var target_position: Vector2
 
 enum State { APPROACHING_TRIGGER, APPROACHING_BRIDGE, WAITING, DEPARTING }
@@ -175,7 +178,22 @@ func _ready():
 	timer.one_shot = true
 	timer.timeout.connect(on_timer_timeout)
 	timer_label.hide()
+	initial_label_scale = timer_label.scale
+
 
 func _process(delta):
 	if !timer.is_stopped():
 		timer_label.text = "%.1f" % timer.time_left
+		
+		# Check if we are in the "danger zone"
+		if timer.time_left < 3.0:
+			timer_label.modulate = DANGER_COLOR
+			timer_label.scale = initial_label_scale * 1.5 # Make it 50% larger
+		else:
+			# Reset to normal state if not in danger zone
+			timer_label.modulate = Color.WHITE
+			timer_label.scale = initial_label_scale
+	else:
+		# Ensure it's reset when the timer is not running at all
+		timer_label.modulate = Color.WHITE
+		timer_label.scale = initial_label_scale

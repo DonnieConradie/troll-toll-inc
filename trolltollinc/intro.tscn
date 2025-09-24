@@ -1,10 +1,27 @@
-[gd_scene load_steps=11 format=3 uid="uid://cgvs7m8hbmhaq"]
+[gd_scene load_steps=23 format=3 uid="uid://cgvs7m8hbmhaq"]
 
 [ext_resource type="Script" uid="uid://cm8wmhrcgrlbo" path="res://Intro.gd" id="1_ayt76"]
-[ext_resource type="AudioStream" uid="uid://h7xfjv203wrb" path="res://assets/sound/intro_fax.MP3" id="2_ayt76"]
+[ext_resource type="Texture2D" uid="uid://d03bt6ojh1lri" path="res://assets/visual/sky_01.png" id="2_u2rf6"]
+[ext_resource type="AudioStream" uid="uid://bsm7s2g4cybxg" path="res://assets/sound/introfax.mp3" id="2_y72e6"]
 [ext_resource type="FontFile" uid="uid://n85i1duxk1xw" path="res://assets/fonts/KiwiSoda.ttf" id="3_7a8ye"]
 [ext_resource type="Shader" uid="uid://cw5i0bvnh4ffe" path="res://assets/shaders/jiggle_text.gdshader" id="4_y72e6"]
 [ext_resource type="FontFile" uid="uid://d0w1s1dm53moq" path="res://assets/fonts/Pixel Square 10.ttf" id="5_u2rf6"]
+[ext_resource type="AudioStream" uid="uid://bstv2kbalopfq" path="res://assets/sound/hover.wav" id="7_dpxxx"]
+[ext_resource type="AudioStream" uid="uid://c5lxy4rnrxrd0" path="res://assets/sound/click.wav" id="8_dk2oa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dpxxx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dk2oa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7ufi4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h0kys"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d0rr7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wby50"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xsd0a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0a7ni"]
 
@@ -20,24 +37,46 @@ shader_parameter/jiggle_amount = 0.5
 shader_parameter/jiggle_speed = 5.0
 shader_parameter/character_width_factor = 25.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dpxxx"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("7_dpxxx")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dk2oa"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("8_dk2oa")
+
 [node name="Intro" type="Node2D"]
 script = ExtResource("1_ayt76")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 480.0
-offset_bottom = 270.0
-color = Color(0, 0, 0, 1)
+[node name="Sky01" type="Sprite2D" parent="."]
+position = Vector2(240, 136)
+texture = ExtResource("2_u2rf6")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_ayt76")
+stream = ExtResource("2_y72e6")
 
 [node name="SkipButton" type="Button" parent="."]
 offset_left = 224.0
 offset_top = 216.0
 offset_right = 256.0
 offset_bottom = 228.0
+theme_override_colors/font_disabled_color = Color(0.270529, 0.208559, 0.252776, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.461763, 0.36833, 0.432348, 1)
+theme_override_colors/font_hover_color = Color(0.51588, 0.416259, 0.484395, 1)
+theme_override_colors/font_color = Color(0.270588, 0.207843, 0.25098, 1)
+theme_override_colors/font_focus_color = Color(0.428399, 0.339522, 0.400471, 1)
+theme_override_colors/font_pressed_color = Color(0.378455, 0.297177, 0.352973, 1)
 theme_override_fonts/font = ExtResource("3_7a8ye")
 theme_override_font_sizes/font_size = 11
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dpxxx")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_dk2oa")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7ufi4")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h0kys")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_d0rr7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_wby50")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xsd0a")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_0a7ni")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_y72e6")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_u2rf6")
@@ -63,4 +102,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
+[node name="Hover" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_dpxxx")
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_dk2oa")
+
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]
+[connection signal="mouse_entered" from="SkipButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="SkipButton" to="." method="_on_button_pressed"]
